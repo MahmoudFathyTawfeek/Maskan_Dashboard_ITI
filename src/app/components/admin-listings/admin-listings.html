@@ -1,0 +1,101 @@
+<div class="d-flex">
+  <!-- Sidebar -->
+  <div class="col-md-2 text-white p-3 d-none d-md-block text-center" style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">
+    <!-- Sidebar Content -->
+  </div>
+
+  <!-- Main Content -->
+  <div class="col-md-10 col-12 p-4">
+    <div class="container mt-4">
+      <h2 class="mb-4">🕵️ Pending Listings for Approval</h2>
+
+      <!-- Loader -->
+      <div *ngIf="loading" class="text-center my-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2">Loading listings...</p>
+      </div>
+
+      <!-- No Listings -->
+      <div *ngIf="!loading && pendingListings.length === 0" class="alert alert-info">
+        No pending listings to approve.
+      </div>
+
+      <!-- Listings Cards -->
+      <div *ngIf="!loading && pendingListings.length > 0" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" >
+        <div class="col" *ngFor="let listing of paginatedListings">
+          <div class="card h-100 shadow-sm border-primary">
+            <!-- ✅ صورة -->
+            <img *ngIf="listing.photos?.length" [src]="listing.photos[0]" class="card-img-top" alt="Listing Image" style="height: 200px; object-fit: cover;">
+
+            <div class="card-body" [ngClass]="isDarkMode ? 'bg-black text-light' : 'bg-light text-dark'">
+              <h5 class="card-title">{{ listing.title }}</h5>
+              <p class="card-text">{{ listing.descyption }}</p>
+              <p><strong>Price:</strong> {{ listing.pricePerNight }} EGP</p>
+              <p><strong>Location:</strong> {{ listing.Location }} ({{ listing.locationType }})</p>
+              <p><strong>Guests:</strong> {{ listing.maxGusts }}</p>
+              <p><strong>Amenities:</strong> {{ listing.amenitiesId }}</p>
+            </div>
+
+            <!-- ✅ الأزرار -->
+            <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between">
+              <button class="btn btn-sm btn-success" (click)="approveListing(listing.id)">✅ Approve</button>
+              <button class="btn btn-sm btn-danger" (click)="openRejectionModal(listing.id)">❌ Reject</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ Toast Message -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
+      <div class="toast align-items-center text-white bg-danger border-0"
+           role="alert"
+           [class.show]="showToast"
+           [class.hide]="!showToast">
+        <div class="d-flex">
+          <div class="toast-body">
+            {{ toastMessage }}
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="hideToast()"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ Modal for Rejection Reason -->
+    <div class="modal fade show" tabindex="-1" style="display: block;" *ngIf="showRejectionModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Reason for Rejection</h5>
+            <button type="button" class="btn-close" (click)="closeRejectionModal()"></button>
+          </div>
+          <div class="modal-body">
+            <textarea [(ngModel)]="rejectionReason" class="form-control" rows="3" placeholder="Enter reason..."></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeRejectionModal()">Cancel</button>
+            <button type="button" class="btn btn-danger" (click)="submitRejection()">Reject</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination Controls -->
+    <nav *ngIf="totalPages > 1" class="mt-4">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="goToPage(currentPage - 1)">Previous</button>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let page of [].constructor(totalPages); let i = index"
+          [class.active]="currentPage === i + 1">
+          <button class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button class="page-link" (click)="goToPage(currentPage + 1)">Next</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

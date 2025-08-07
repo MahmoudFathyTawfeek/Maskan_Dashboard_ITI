@@ -1,0 +1,140 @@
+<div class="d-flex flex-wrap">
+  <!-- Sidebar -->
+  <div class="col-12 col-md-2 text-white p-3 d-none d-md-block text-center"
+       style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">
+    <!-- عناصر التنقل الجانبي -->
+  </div>
+
+  <!-- Main Content -->
+  <div class="col-12 col-md-10 p-4">
+
+    <!-- العنوان -->
+    <h3 class="text-primary text-center mb-4">System Statistics</h3>
+
+    <!-- الدوائر الإحصائية -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3 mb-5">
+      <!-- Occupancy Rate -->
+      <div class="col">
+        <div class="card p-4 rounded-circle shadow-sm bg-info text-dark text-center mx-auto" style="width: 160px; height: 160px;">
+          <div class="fs-5 fw-bold">{{ occupancyRate }}%</div>
+          <div style="font-size: 13px;">Occupancy</div>
+        </div>
+      </div>
+
+      <!-- User Types -->
+      <div class="col">
+        <div class="card p-4 rounded-circle shadow-sm bg-light text-dark text-center mx-auto" style="width: 160px; height: 160px;">
+          <canvas baseChart 
+            [data]="userTypePieData" 
+            [options]="miniPieChartOptions" 
+            [plugins]="pieChartPlugins" 
+            [type]="'pie'">
+          </canvas>
+          <div style="font-size: 13px;">User Types</div>
+        </div>
+      </div>
+
+      <!-- User Genders -->
+      <div class="col">
+        <div class="card p-4 rounded-circle shadow-sm bg-light text-dark text-center mx-auto" style="width: 160px; height: 160px;">
+          <canvas baseChart 
+            [data]="userGenderPieData" 
+            [options]="miniPieChartOptions" 
+            [plugins]="pieChartPlugins" 
+            [type]="'pie'">
+          </canvas>
+          <div style="font-size: 13px;">Users Genders</div>
+        </div>
+      </div>
+
+      <!-- Ads Approval -->
+      <div class="col">
+        <div class="card p-4 rounded-circle shadow-sm bg-light text-dark text-center mx-auto" style="width: 160px; height: 160px;">
+          <canvas baseChart 
+            [data]="adsApprovalPieData" 
+            [options]="miniPieChartOptions" 
+            [plugins]="pieChartPlugins" 
+            [type]="'pie'">
+          </canvas>
+          <div style="font-size: 13px;">Listings Status</div>
+        </div>
+      </div>
+
+      <!-- Payment Status -->
+      <div class="col">
+        <div class="card p-4 rounded-circle shadow-sm bg-light text-dark text-center mx-auto" style="width: 160px; height: 160px;">
+          <canvas baseChart 
+            [data]="paymentStatusPieData" 
+            [options]="miniPieChartOptions" 
+            [plugins]="pieChartPlugins" 
+            [type]="'pie'">
+          </canvas>
+          <div style="font-size: 13px;">Payment Status</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- الرسوم البيانية -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <!-- Overall Stats -->
+      <div class="col-md-6">
+        <div class="card chart-card h-100">
+          <div class="card-header bg-primary text-white fw-bold text-center">Overall Statistics</div>
+          <div class="card-body">
+            <canvas baseChart 
+              [data]="barChartData" 
+              [options]="barChartOptions" 
+              [type]="'bar'">
+            </canvas>
+          </div>
+        </div>
+      </div>
+
+          <!-- Listings by Title -->
+      <div class="col-md-6">
+        <div class="card chart-card h-100">
+          <div class="card-header bg-info text-white fw-bold text-center">Listings by Title</div>
+          <div class="card-body">
+            <canvas baseChart 
+              [data]="listingsTitlePieData" 
+              [options]="pieChartOptions" 
+              [plugins]="pieChartPlugins" 
+              [type]="'pie'">
+            </canvas>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Unit Types Distribution -->
+      <div class="col-md-6">
+        <div class="card chart-card h-100">
+          <div class="card-header bg-success text-white fw-bold text-center">Unit Types Distribution</div>
+          <div class="card-body">
+            <canvas baseChart 
+              [data]="pieChartData" 
+              [options]="pieChartOptions" 
+              [plugins]="pieChartPlugins"
+              [type]="'pie'">
+            </canvas>
+          </div>
+        </div>
+      </div>
+
+  
+      <!-- Bookings per Day -->
+      <div class="col-md-6">
+        <div class="card chart-card h-100">
+          <div class="card-header bg-warning text-dark fw-bold text-center">Bookings Per Day</div>
+          <div class="card-body">
+            <canvas baseChart 
+              [data]="bookingsPerDayLineData" 
+              [options]="lineChartOptions" 
+              [type]="'line'">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

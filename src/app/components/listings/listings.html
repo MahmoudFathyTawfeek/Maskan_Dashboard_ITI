@@ -1,0 +1,95 @@
+<div class="d-flex">
+
+  <!-- Sidebar -->
+<div class="col-md-2 text-white p-3 d-none d-md-block text-center" style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">   
+  
+
+  </div>
+
+  <!-- Main Content -->
+   <div class="col-md-10 col-12 p-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>All Listings</h3>
+    <a routerLink="/listings/add" class="btn btn-primary">+ Add Listing</a>
+  </div>
+  
+ 
+      <!-- Loader -->
+      <div *ngIf="loading" class="text-center my-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2">Loading listings...</p>
+      </div>
+
+  <div class="row">
+    <div class="col-md-3 mb-3" *ngFor="let listing of paginatedListings">
+      <div class="card h-100 shadow-sm text-dark">
+              <!-- سلايدر الصور -->
+      <div id="carousel-{{ listing.id }}" class="carousel slide" data-bs-ride="carousel" *ngIf="listing.photos?.length">
+        <div class="carousel-inner">
+          <div *ngFor="let photo of listing.photos; let i = index" [ngClass]="['carousel-item', i === 0 ? 'active' : '']">
+            <img [src]="photo" class="d-block w-100" alt="{{ listing.title }}" style="height: 200px; object-fit: cover;">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carousel-' + listing.id" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carousel-' + listing.id" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+
+        <div class="card-body">
+          <h5 class="card-title">{{ listing.title }}</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <strong>Host :</strong> {{ getUserEmail(listing.hostId) }}
+            </li>
+            <li class="list-group-item">
+              <strong>Price Per Night:</strong> ${{ listing.pricePerNight }}
+            </li>
+            <li class="list-group-item">
+              <strong>Location Type:</strong> {{ listing.locationType }}
+            </li>
+             <li class="list-group-item">
+              <strong>Location :</strong> {{ listing.Location }}
+            </li>
+            <li class="list-group-item">
+               <strong>Descryption :</strong> {{ listing.descyption }}
+            </li>
+              <li class="list-group-item">
+               <strong>Max Gusts :</strong> {{ listing.maxGusts }}
+            </li>
+            <li class="list-group-item">
+              <strong>isApproved:</strong>
+              <span *ngIf="listing.isApproved; else noDate2">{{ listing.isApproved }}</span>
+              <ng-template #noDate2><em>False</em></ng-template>
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer d-flex justify-content-between gap-1">
+          <button class="btn btn-danger btn-sm" (click)="deleteListing(listing.id)">🗑️ Delete</button>
+          <a [routerLink]="['/listings/update', listing.id]" class="btn btn-warning btn-sm">✏️ Edit</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination Controls -->
+  <nav *ngIf="totalPages > 1" class="mt-4">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <button class="page-link" (click)="goToPage(currentPage - 1)">Previous</button>
+      </li>
+      <li
+        class="page-item"
+        *ngFor="let page of [].constructor(totalPages); let i = index"
+        [class.active]="currentPage === i + 1">
+        <button class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <button class="page-link" (click)="goToPage(currentPage + 1)">Next</button>
+      </li>
+    </ul>
+  </nav>
+</div>
+</div>

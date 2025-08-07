@@ -1,0 +1,90 @@
+<div class="d-flex">
+
+   <!-- Sidebar -->
+<div class="col-md-2 text-white p-3 d-none d-md-block text-center" style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">   
+  
+
+  </div>
+
+<div  class="col-md-10 col-12 p-4">
+
+ <div class="d-flex justify-content-between align-items-center mb-3">
+     <h3 class="mb-4 ">📅 Bookings List</h3>
+  </div>
+  <!-- ✅ الفلاتر -->
+<div class="row mb-3 g-2 ">
+  <div class="col-md-3">
+    <input type="date" class="form-control" [(ngModel)]="filterStartDate" (change)="applyFilters()" placeholder="From">
+  </div>
+  <div class="col-md-3">
+    <input type="date" class="form-control" [(ngModel)]="filterEndDate" (change)="applyFilters()" placeholder="To">
+  </div>
+  <div class="col-md-3">
+    <select class="form-select" [(ngModel)]="filterStatus" (change)="applyFilters()">
+      <option value="">Booking Status</option>
+      <option value="Paid">Paid</option>
+      <option value="Pending">Pending</option>
+      <option value="Failed">Failed</option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <button class="btn btn-secondary w-100" (click)="resetFilters()">🔄 Reset</button>
+  </div>
+</div>
+
+
+  <div class="table-responsive">
+<table class="table table-bordered table-hover text-center align-middle"
+        *ngIf="bookings.length > 0" [ngClass]="isDarkMode ? 'bg-black text-light' : 'bg-light text-dark'"
+        style="border: 1px solid rgb(61, 4, 114);">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>User</th>
+      <th>Listing Title</th>
+      <th>Check-in</th>
+      <th>Check-out</th>
+      <th>Total Price</th>
+      <th>Payment</th>
+      <th>Created At</th>
+    </tr>
+  </thead>
+  <tbody >
+    <tr *ngFor="let booking of paginatedBookings" >
+      <td>{{ booking.id }}</td>
+      <td>{{ getUserEmail(booking.userId) }}</td>
+      <td>{{ getAdTitle(booking.listingId) }}</td>
+      <td>{{ booking.checkInDate | date: 'mediumDate' }}</td>
+      <td>{{ booking.checkOutDate | date: 'mediumDate' }}</td>
+      <td>{{ booking.totalPrice | currency }}</td>
+      <td>
+        <span class="badge"
+              [ngClass]="{
+                'bg-success': booking.paymentStatus === 'Paid',
+                'bg-warning text-dark': booking.paymentStatus === 'Pending',
+                'bg-danger': booking.paymentStatus === 'Failed'
+              }">
+          {{ booking.paymentStatus }}
+        </span>
+        <small class="d-block">{{ booking.paymentMethod }}</small>
+      </td>
+      <td>{{ booking.createdAt | date: 'short' }}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+  <div class="d-flex justify-content-center align-items-center gap-2 mt-3">
+    <button class="btn btn-primary btn-sm" (click)="prevPage()" [disabled]="currentPage === 1">
+      ◀ Previous
+    </button>
+
+    <span>{{ currentPage }} / {{ totalPages }}</span>
+
+    <button class="btn btn-primary btn-sm" (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Next ▶
+    </button>
+  </div>
+</div>
+</div>

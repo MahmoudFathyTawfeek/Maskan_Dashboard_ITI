@@ -1,0 +1,127 @@
+<div class="d-flex">
+  <!-- Sidebar -->
+  <div class="col-md-2 text-white p-3 d-none d-md-block text-center" style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">
+  </div>
+
+  <!-- Main Content -->
+  <div class="col-md-10 col-12 p-4">
+    <div class="row justify-content-between align-items-center">
+      <h3 class="col-md-8">Add new listing</h3>
+      <button class="btn btn-primary col-md-2" [routerLink]="['/listings']">Back</button>
+    </div>
+
+    <form [formGroup]="listingForm" (ngSubmit)="addListing()" class="m-2 p-3 rounded-3 border border-primary">
+
+      <!-- Title and Host ID -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-control" formControlName="title" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Host ID</label>
+          <input type="text" class="form-control" formControlName="hostId" />
+        </div>
+      </div>
+
+      <!-- Price and Category -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Price Per Night</label>
+          <input type="number" class="form-control" formControlName="pricePerNight" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Category ID</label>
+          <input type="text" class="form-control" formControlName="categoryId" />
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Location Type</label>
+          <select class="form-control" formControlName="locationType">
+            <option value="Seaside">Seaside</option>
+            <option value="City">City</option>
+            <option value="Mountain">Mountain</option>
+            <option value="Rural">Rural</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Location</label>
+          <input type="text" class="form-control" formControlName="Location" />
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea rows="3" class="form-control" formControlName="descyption"></textarea>
+      </div>
+
+      <!-- Amenities and Max Guests -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Amenities ID</label>
+          <input type="text" class="form-control" formControlName="amenitiesId" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Max Guests</label>
+          <input type="number" class="form-control" formControlName="maxGusts" />
+        </div>
+      </div>
+
+      <!-- 📸 Photos Array -->
+      <div class="mb-3">
+        <label class="form-label">Photos URLs</label>
+        <div formArrayName="photos">
+          <div
+            class="d-flex align-items-center mb-2"
+            *ngFor="let photo of photos.controls; let i = index"
+          >
+            <input
+              class="form-control me-2"
+              [formControlName]="i"
+              placeholder="Enter photo URL"
+            />
+            <button
+              type="button"
+              class="btn btn-danger btn-sm me-1"
+              (click)="removePhotoField(i)"
+              [disabled]="photos.length === 1"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-primary btn-sm" (click)="addPhotoField()">
+          + Add Photo
+        </button>
+      </div>
+
+      <!-- Average Rate -->
+      <div class="mb-3">
+        <label class="form-label">Average Rate</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="averageRate"
+          min="0"
+          max="5"
+          step="0.1"
+        />
+      </div>
+
+      <!-- Is Approved -->
+      <div class="mb-3">
+        <label class="form-label">Is Approved</label>
+        <select class="form-control" formControlName="isApproved">
+          <option [value]="true">Yes</option>
+          <option [value]="false">No</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-success">Add Listing</button>
+    </form>
+  </div>
+</div>

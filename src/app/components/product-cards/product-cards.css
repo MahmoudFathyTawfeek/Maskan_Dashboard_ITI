@@ -1,0 +1,16 @@
+.changeBG{
+    background-color: yellow;
+}
+.changeBG2{
+    background-color: green;
+}
+
+.fixed-bg {
+  background-color: #030608 !important; /* لون ثابت */
+  color: #e5ecf3 !important;           /* نصوص ثابتة */
+}
+
+.fixed-bg2 {
+  background-color: #071d2c !important; /* لون ثابت */
+  color: #e0e9f1 !important;           /* نصوص ثابتة */
+}

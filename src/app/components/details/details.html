@@ -1,0 +1,55 @@
+<div class="d-flex">
+  <!-- Sidebar -->
+  <div class="col-md-2 text-white p-3 d-none d-md-block text-center"
+       style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">
+    <!-- يمكنك وضع قائمة تنقل هنا -->
+    <button class="btn btn-outline-light mb-2" (click)="goTo(allIds[0])">Unit 1</button>
+    <button class="btn btn-outline-light mb-2" (click)="goTo(allIds[1])">Unit 2</button>
+    <button class="btn btn-outline-light" (click)="goTo(allIds[2])">Unit 3</button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="col-md-10 pt-4">
+    <div class="p-4" *ngIf="unit">
+      <div class="row text-center text-primary mb-4"
+           style="border: 1px solid blue; border-radius: 10px;">
+        <h1>Unit Details</h1>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-md-6 p-3 d-flex align-items-center justify-content-center"
+             style="border: 1px solid blue; border-radius: 10px;">
+          <img [src]="unit.imageUrl || 'https://via.placeholder.com/400x300'"
+               alt="Unit Image"
+               class="img-fluid rounded"
+               style="max-height: 300px; object-fit: cover;">
+        </div>
+
+        <div class="col-md-6 text-primary p-3"
+             style="border: 1px solid blue; border-radius: 10px;">
+          <h4><strong>Title:</strong> {{ unit.title }}</h4>
+          <h5><strong>Description:</strong> {{ unit.description || 'No description' }}</h5>
+          <h5><strong>ID:</strong> {{ unit.id }}</h5>
+          <h5><strong>Location:</strong> {{ unit.location || 'Not specified' }}</h5>
+          <h5><strong>Price:</strong> {{ unit.price | currency:'USD' }}</h5>
+          <h5>
+            <strong>Available:</strong>
+            <span [ngClass]="unit.isAvailable ? 'text-success' : 'text-danger'">
+              {{ unit.isAvailable ? 'Yes' : 'No' }}
+            </span>
+          </h5>
+        </div>
+      </div>
+
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary me-2" (click)="prev()">⬅ Previous</button>
+        <button class="btn btn-secondary me-2" (click)="next()">Next ➡</button>
+        <button class="btn btn-primary" (click)="goBack()">🔙 Back</button>
+      </div>
+    </div>
+
+    <div *ngIf="!unit" class="text-center text-muted mt-5">
+      <p>🔄 Loading unit details...</p>
+    </div>
+  </div>
+</div>

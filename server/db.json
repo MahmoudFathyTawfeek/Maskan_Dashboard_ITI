@@ -1,0 +1,450 @@
+{
+  "users": [
+    {
+      "name": "Mahmoud_Tawfeek",
+      "email": "mahm888@gmail.com",
+      "password": "password",
+      "phone": "201277563987",
+      "gender": "male",
+      "dateOfBirth": "1997-02-19",
+      "isVerified": true,
+      "isAdmin": true,
+      "id": "67df"
+    },
+    {
+      "name": "Alaa",
+      "email": "alaa@gmail.com",
+      "password": "dfsdbdfgvbsdrf",
+      "phone": "01187976545",
+      "gender": "male",
+      "dateOfBirth": "2024-11-11",
+      "isVerified": true,
+      "isAdmin": true,
+      "id": "d268"
+    },
+    {
+      "name": "mostafa",
+      "email": "mostafa@gmail.com",
+      "password": "nnnnnnnnnnn",
+      "phone": "0123466564",
+      "gender": "male",
+      "dateOfBirth": "2025-07-21",
+      "isVerified": true,
+      "isAdmin": true,
+      "id": "82e8"
+    },
+    {
+      "name": "fared",
+      "email": "fared@gmail.com",
+      "password": "ooooooo",
+      "phone": "01265657483",
+      "gender": "male",
+      "dateOfBirth": "2025-06-30",
+      "isVerified": true,
+      "isAdmin": false,
+      "id": "f60a"
+    },
+    {
+      "name": "Saad",
+      "email": "saad@gmail.com",
+      "password": "fgfgfgfg",
+      "phone": "01123458543",
+      "gender": "male",
+      "dateOfBirth": "2025-07-15",
+      "isVerified": true,
+      "isAdmin": false,
+      "id": "8a87"
+    },
+    {
+      "name": "Hammam",
+      "email": "hammam@gmail.com",
+      "password": "tttttttt",
+      "phone": "201278657383",
+      "gender": "female",
+      "dateOfBirth": "2025-07-07",
+      "isVerified": true,
+      "isAdmin": false,
+      "id": "aed9"
+    },
+    {
+      "name": "Bahaa",
+      "email": "bahaa@gmail.com",
+      "password": "hjkloiuyh",
+      "phone": "01275938488",
+      "gender": "male",
+      "dateOfBirth": "2025-06-29",
+      "isVerified": false,
+      "isAdmin": false,
+      "id": "185f"
+    },
+    {
+      "name": "Gad",
+      "email": "gad@gmail.com",
+      "password": "mmmmmmmmm",
+      "phone": "012879875644",
+      "gender": "male",
+      "dateOfBirth": "2025-07-13",
+      "isVerified": false,
+      "isAdmin": true,
+      "id": "0130"
+    },
+    {
+      "name": "omar",
+      "email": "omar@gmail.com",
+      "password": "aaaaaaa",
+      "phone": "01185746637",
+      "gender": "male",
+      "dateOfBirth": "2025-07-01",
+      "isVerified": "true",
+      "isAdmin": true,
+      "id": "759a"
+    }
+  ],
+  "units": [
+    {
+      "id": "f755",
+      "title": "sohag",
+      "description": "شقة فى سوهاج",
+      "location": "sohag",
+      "price": 20000,
+      "imageUrl": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      "isAvailable": true
+    },
+    {
+      "id": "a118",
+      "title": "Alex",
+      "description": "unit in mansheea",
+      "location": "mansheea",
+      "price": 500,
+      "imageUrl": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      "isAvailable": true
+    },
+    {
+      "id": "3b71",
+      "title": "Cairo",
+      "description": "unit in naser city",
+      "location": "naser city",
+      "price": 500,
+      "imageUrl": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      "isAvailable": false
+    },
+    {
+      "id": "ac79",
+      "title": "Giza",
+      "description": "Villa in 6 octo",
+      "location": "6 octopar",
+      "price": 1600,
+      "imageUrl": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      "isAvailable": true
+    },
+    {
+      "id": "30de",
+      "title": "cairo",
+      "description": "شقة فى القاهرة",
+      "location": "القاهرة",
+      "price": 4000,
+      "imageUrl": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      "isAvailable": true
+    },
+    {
+      "id": "57a5",
+      "title": "المنشاه",
+      "description": "شقة فى المنشاه",
+      "location": "سوهاج",
+      "price": 5000,
+      "imageUrl": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      "isAvailable": true
+    },
+    {
+      "id": "6c97",
+      "title": "طما",
+      "description": "شقة فى طما",
+      "location": "سوهاج",
+      "price": 5000,
+      "imageUrl": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      "isAvailable": true
+    },
+    {
+      "id": "70ad",
+      "title": "سوهاج",
+      "description": "شقة فى سوهاج",
+      "location": "سوهاج",
+      "price": 5000,
+      "imageUrl": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      "isAvailable": true
+    },
+    {
+      "id": "70ad",
+      "title": "اسوان",
+      "description": "شقة فى اسوان",
+      "location": "اسوان",
+      "price": 6000,
+      "imageUrl": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      "isAvailable": true
+    }
+  ],
+  "bookings": [
+    {
+      "id": "1",
+      "userId": "67df",
+      "listingId": "d3d9",
+      "checkInDate": "2025-08-10T00:00:00.000Z",
+      "checkOutDate": "2025-08-15T00:00:00.000Z",
+      "totalPrice": 1500,
+      "paymentStatus": "Paid",
+      "paymentMethod": "paypal",
+      "createdAt": "2025-07-25T14:00:00.000Z"
+    },
+    {
+      "id": "2",
+      "userId": "67df",
+      "listingId": "d3d9",
+      "checkInDate": "2025-09-01T00:00:00.000Z",
+      "checkOutDate": "2025-09-05T00:00:00.000Z",
+      "totalPrice": 1000,
+      "paymentStatus": "Pending",
+      "paymentMethod": "stripo",
+      "createdAt": "2025-07-28T09:30:00.000Z"
+    },
+    {
+      "id": "3",
+      "userId": "67df",
+      "listingId": "cd56",
+      "checkInDate": "2025-07-30T00:00:00.000Z",
+      "checkOutDate": "2025-08-02T00:00:00.000Z",
+      "totalPrice": 1200,
+      "paymentStatus": "Failed",
+      "paymentMethod": "paypal",
+      "createdAt": "2025-07-27T17:15:00.000Z"
+    },
+    {
+      "id": "4",
+      "userId": "67df",
+      "listingId": "cd56",
+      "checkInDate": "2025-07-30T00:00:00.000Z",
+      "checkOutDate": "2025-08-02T00:00:00.000Z",
+      "totalPrice": 1200,
+      "paymentStatus": "Failed",
+      "paymentMethod": "paypal",
+      "createdAt": "2025-07-27T17:15:00.000Z"
+    },
+    {
+      "id": "5",
+      "userId": "67df",
+      "listingId": "cd56",
+      "checkInDate": "2025-07-30T00:00:00.000Z",
+      "checkOutDate": "2025-08-02T00:00:00.000Z",
+      "totalPrice": 1200,
+      "paymentStatus": "Failed",
+      "paymentMethod": "paypal",
+      "createdAt": "2025-07-29T17:15:00.000Z"
+    },
+    {
+      "id": "6",
+      "userId": "67df",
+      "listingId": "cd56",
+      "checkInDate": "2025-07-30T00:00:00.000Z",
+      "checkOutDate": "2025-08-02T00:00:00.000Z",
+      "totalPrice": 1200,
+      "paymentStatus": "Failed",
+      "paymentMethod": "paypal",
+      "createdAt": "2025-07-29T17:15:00.000Z"
+    },
+    {
+      "id": "7",
+      "userId": "67df",
+      "listingId": "cd56",
+      "checkInDate": "2025-07-30T00:00:00.000Z",
+      "checkOutDate": "2025-08-02T00:00:00.000Z",
+      "totalPrice": 1200,
+      "paymentStatus": "Failed",
+      "paymentMethod": "paypal",
+      "createdAt": "2025-07-30T17:15:00.000Z"
+    },
+    {
+      "id": "8",
+      "userId": "67df",
+      "listingId": "cd56",
+      "checkInDate": "2025-07-30T00:00:00.000Z",
+      "checkOutDate": "2025-08-02T00:00:00.000Z",
+      "totalPrice": 1200,
+      "paymentStatus": "Failed",
+      "paymentMethod": "paypal",
+      "createdAt": "2025-07-29T17:15:00.000Z"
+    }
+  ],
+  "listings": [
+    {
+      "title": "Apartment",
+      "hostId": "67df",
+      "descyption": "Apartment at the nile",
+      "pricePerNight": 150,
+      "categoryId": "3",
+      "locationType": "Seaside",
+      "Location": "Sohag",
+      "amenitiesId": "2",
+      "maxGusts": 6,
+      "photos": [
+        "https://images.unsplash.com/photo-1544894079-e81a9eb1da8b?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000",
+        "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGZyZWUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D&ixlib=rb-4.1.0&q=60&w=3000",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+        "https://images.unsplash.com/photo-1751795195789-8dab6693475d?fm=jpg&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8&ixlib=rb-4.1.0&q=60&w=3000"
+      ],
+      "averageRate": 0.7,
+      "isApproved": true,
+      "id": "d3d9",
+      "updatedAt": "2025-08-05T18:55:39.874Z",
+      "rejectionReason": "lnol"
+    },
+    {
+      "title": "Vella",
+      "hostId": "aed9",
+      "descyption": "villa in new sohag",
+      "pricePerNight": 1000,
+      "categoryId": "1",
+      "locationType": "City",
+      "Location": "Sohag",
+      "amenitiesId": "2",
+      "maxGusts": 6,
+      "photos": [
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+        "https://images.unsplash.com/photo-1544894079-e81a9eb1da8b?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000",
+        "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGZyZWUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D&ixlib=rb-4.1.0&q=60&w=3000",
+        "https://images.unsplash.com/photo-1751795195789-8dab6693475d?fm=jpg&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8&ixlib=rb-4.1.0&q=60&w=3000"
+      ],
+      "averageRate": 1.9,
+      "isApproved": true,
+      "id": "cd56",
+      "updatedAt": "2025-08-05T22:35:12.544Z",
+      "rejectionReason": "fcgbsdv"
+    },
+    {
+      "title": "Vella",
+      "hostId": "aed9",
+      "descyption": "villa in new sohag",
+      "pricePerNight": 1000,
+      "categoryId": "1",
+      "locationType": "City",
+      "Location": "Sohag",
+      "amenitiesId": "2",
+      "maxGusts": 6,
+      "photos": [
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+        "https://images.unsplash.com/photo-1544894079-e81a9eb1da8b?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000",
+        "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGZyZWUlMjBpbWFnZXN8ZW58MHx8MHx8fDA%3D&ixlib=rb-4.1.0&q=60&w=3000",
+        "https://images.unsplash.com/photo-1751795195789-8dab6693475d?fm=jpg&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8&ixlib=rb-4.1.0&q=60&w=3000"
+      ],
+      "averageRate": 1.9,
+      "isApproved": false,
+      "id": "cd77",
+      "updatedAt": "2025-08-05T22:35:12.544Z",
+      "rejectionReason": "fcgbsdv"
+    },
+    {
+      "title": "Apartment",
+      "hostId": "67df",
+      "descyption": "Apartment at the nile",
+      "pricePerNight": 500,
+      "categoryId": "3",
+      "locationType": "Seaside",
+      "Location": "Sohag",
+      "amenitiesId": "2",
+      "maxGusts": 5,
+      "photos": [
+        "https://images.unsplash.com/photo-1751795195789-8dab6693475d?fm=jpg&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8&ixlib=rb-4.1.0&q=60&w=3000",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+        "https://images.unsplash.com/photo-1544894079-e81a9eb1da8b?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000"
+      ],
+      "averageRate": 0,
+      "isApproved": "false",
+      "id": "0885",
+      "updatedAt": "2025-08-06T18:54:55.561Z"
+    },
+    {
+      "title": "Apartment",
+      "hostId": "67df",
+      "descyption": "apartment in new sohag city",
+      "pricePerNight": 800,
+      "categoryId": "3",
+      "locationType": "City",
+      "Location": "sohag",
+      "amenitiesId": "4",
+      "maxGusts": 4,
+      "photos": [
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+      ],
+      "averageRate": 2,
+      "isApproved": "false",
+      "id": "4b56",
+      "updatedAt": "2025-08-06T18:10:49.423Z"
+    },
+    {
+      "id": "351a",
+      "title": "Stodio",
+      "hostId": "67df",
+      "descyption": "vrverrfrevre",
+      "pricePerNight": 20,
+      "categoryId": "3",
+      "locationType": "City",
+      "Location": "rgvrever",
+      "amenitiesId": "3",
+      "maxGusts": 1,
+      "photos": [
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
+      ],
+      "averageRate": 1.1,
+      "isApproved": false
+    },
+    {
+      "id": "0a40",
+      "title": "Vella",
+      "hostId": "67df",
+      "descyption": "Vella in sohag",
+      "pricePerNight": 1000,
+      "categoryId": "3",
+      "locationType": "City",
+      "Location": "Sohag",
+      "amenitiesId": "5",
+      "maxGusts": 7,
+      "photos": [
+        "https://images.unsplash.com/photo-1751795195789-8dab6693475d?fm=jpg&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8&ixlib=rb-4.1.0&q=60&w=3000"
+      ],
+      "averageRate": 2.2,
+      "isApproved": false
+    },
+    {
+      "id": "143a",
+      "title": "Stodio",
+      "hostId": "8a87",
+      "descyption": "stodio in giza",
+      "pricePerNight": 5000,
+      "categoryId": "2",
+      "locationType": "City",
+      "Location": "Giza",
+      "amenitiesId": "4",
+      "maxGusts": 1,
+      "photos": [
+        "https://images.unsplash.com/photo-1751795195789-8dab6693475d?fm=jpg&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8&ixlib=rb-4.1.0&q=60&w=3000"
+      ],
+      "averageRate": 0.4,
+      "isApproved": false
+    },
+    {
+      "id": "1bbf",
+      "title": "Apartment",
+      "hostId": "8a87",
+      "descyption": "apartment in sohag",
+      "pricePerNight": 400,
+      "categoryId": "1",
+      "locationType": "City",
+      "Location": "Sohag",
+      "amenitiesId": "3",
+      "maxGusts": 4,
+      "photos": [
+        "https://images.unsplash.com/photo-1544894079-e81a9eb1da8b?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000"
+      ],
+      "averageRate": 1.4,
+      "isApproved": false
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+
+.main-dashboard {
+  width: 100vw; 
+  min-height: 100vh;
+
+  color: white;
+  padding: 0; 
+  margin: 0; 
+}
+a.active{
+    color: black !important;
+}
+
+.nav-link.active {
+  font-weight: bold;
+  color: #ffc107 !important;
+}
+.dark {
+  background-color: #222;
+  color: white;
+}
+
+.light {
+  background-color: white;
+  color: black;
+}
+
+.container-fluid {
+  width: 100%;
+  max-width: 100%;
+  padding: 0px
+}
+
+.stat-card {
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.chart-card {
+  background-color: #1e1e2f;
+  color: white;
+  border-radius: 10px;
+}
+
+.card-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-body {
+  background-color: #f8f9fa;
+  border-radius: 0 0 10px 10px;
+}
+
+h3 {
+  color: #f8f9fa;
+}
+.stat-circle {
+  width: 120px;
+  height: 120px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+

@@ -1,0 +1,57 @@
+/* تنسيق الحاوية */
+.container {
+  max-width: 600px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* العنوان */
+h3 {
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* الحقول */
+form .form-control {
+  border-radius: 6px;
+  box-shadow: none;
+  transition: border-color 0.3s ease-in-out;
+}
+
+form .form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* زر الحفظ */
+button.btn-success {
+  width: 48%;
+}
+
+/* زر الإلغاء */
+a.btn-secondary {
+  width: 48%;
+  text-align: center;
+}
+
+/* أزرار جنب بعض */
+form .btn {
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .container {
+    padding: 15px;
+  }
+
+  button.btn-success,
+  a.btn-secondary {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

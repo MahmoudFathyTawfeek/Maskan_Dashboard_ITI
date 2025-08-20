@@ -2,15 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 import { Authintication } from '../../service/authintication';
+import {jwtDecode} from 'jwt-decode'
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, RouterLink, HttpClientModule]
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, RouterLink]
 })
 export class Login {
   loginForm: FormGroup;
@@ -28,35 +29,60 @@ export class Login {
     });
   }
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
-      this.loading = true;
+onSubmit() {
+  if (this.loginForm.valid) {
+    const { email, password } = this.loginForm.value;
+    this.loading = true;
 
-      this.authService.getUsers().subscribe({
-        next: (users) => {
-          this.loading = false;
+    this.authService.login(email, password).subscribe({
+      next: (response) => {
+        this.loading = false;
 
-          const user = users.find(u => u.email === email && u.password === password);
+        if (response?.token) {
+          try {
+            const decoded: any = jwtDecode(response.token);
 
-          if (!user) {
-            alert('Invalid email or password');
-            return;
+            if (decoded.role === 'admin') {
+
+              Swal.fire({
+                icon: "success",
+                title: "Successful",
+                text: `${response?.message?.en || "Login successful!"}`,
+                timer: 2000,
+                showConfirmButton: false
+              });
+              this.router.navigate(['/home']);
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "No permissions",
+                text: "You don’t have permission to access the dashboard.",
+              });
+            }
+          } catch (err) {
+            Swal.fire({
+              icon: "error",
+              title: "Token error",
+              text: "Invalid or corrupted token received.",
+            });
           }
-
-          if (user.role === 'admin') {
-            localStorage.setItem('user', JSON.stringify(user));
-            localStorage.setItem('isLoggedIn', 'true');
-            this.router.navigate(['/home']);
-          } else {
-            alert('Access denied: Admins only');
-          }
-        },
-        error: () => {
-          this.loading = false;
-          alert('Something went wrong. Please try again.');
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Invalid login",
+            text: `${response?.message?.en}`,
+          });
         }
-      });
-    }
+      },
+      error: (err) => {
+        this.loading = false;
+        Swal.fire({
+          icon: "error",
+          title: "Login failed",
+          text: err?.error?.message?.en || "Invalid email or password",
+        });
+      }
+    });
   }
+}
 }

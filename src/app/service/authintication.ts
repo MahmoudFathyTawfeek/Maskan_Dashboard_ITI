@@ -15,4 +15,8 @@ export class Authintication {
   getUsers(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+  login(email: string, password: string): Observable<any> {
+    const loginUrl = `http://localhost:8000/api/v1/users/login`;
+    return this.http.post<any>(loginUrl, { email, password });
+  }
 }

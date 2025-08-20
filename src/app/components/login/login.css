@@ -2,3 +2,47 @@ body {
   margin: 0;
   padding: 0;
 }
+.bg-nav {
+  background-color: #C69963 !important; /* dark brown */
+}
+
+.navbar-text {
+  font-size: 1.3rem;
+  color: #C69963 !important;
+}
+
+/* Brand Color */
+.text-brown {
+  color: #C69963 !important;
+}
+
+.btn-brown {
+  background-color: #C69963 !important;
+  border: none;
+  color: white !important;
+  transition: 0.3s;
+}
+
+.btn-brown:hover {
+  background-color: #a67847 !important;
+}
+
+.btn-outline-brown {
+  border: 1px solid #C69963 !important;
+  color: #C69963 !important;
+}
+
+.btn-outline-brown:hover {
+  background-color: #C69963 !important;
+  color: white !important;
+}
+
+.form-control:focus {
+  border-color: #C69963 !important;
+  box-shadow: 0 0 0 0.2rem rgba(198, 153, 99, 0.25) !important;
+}
+
+/* footer  */
+.bg-footer{
+  background-color: #292524;
+}

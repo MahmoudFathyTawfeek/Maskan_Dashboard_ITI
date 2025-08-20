@@ -1,17 +1,10 @@
 <div class="container-fluid min-vh-100 d-flex flex-column m-0 p-0">
-
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark" style="border-bottom: 1px solid rgb(3, 1, 1); background-color: rgb(8, 8, 8) !important;">
     <div class="w-100 d-flex justify-content-between align-items-center px-3">
       <div class="d-flex align-items-center">
         <a class="navbar-brand d-flex align-items-center" routerLink="/">
-          <img
-            src="assets/logo.PNG"
-            alt="Logo"
-            width="120"
-            height="40"
-            class="me-2 rounded shadow-sm"
-          />
+          <img src="assets/logooo.PNG" alt="Logo" width="120" height="40" class="me-2 rounded shadow-sm" />
         </a>
         <p class="navbar-brand mb-0">Dashboard</p>
       </div>
@@ -26,26 +19,25 @@
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group mb-3">
           <label>Email</label>
-          <input
-            type="email"
-            formControlName="email"
-            class="form-control"
-            placeholder="Enter email"
-          />
+          <input type="email" formControlName="email" class="form-control" placeholder="Enter email" />
         </div>
 
         <div class="form-group mb-3">
-          <label>Password</label>
-          <input
-            type="password"
-            formControlName="password"
-            class="form-control"
-            placeholder="Enter password"
-          />
+          <label class="form-label">Password</label>
+          <div class="input-group">
+            <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="password">
+            <button type="button" class="btn btn-outline-secondary"
+              (mousedown)="showPassword = true"
+              (mouseup)="showPassword = false"
+              (mouseleave)="showPassword = false"
+              tabindex="-1">
+              👁️
+            </button>
+          </div>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100 mt-3" [disabled]="loginForm.invalid">
-          Login
+        <button type="submit" class="btn btn-primary w-100 mt-3" [disabled]="loginForm.invalid || loading">
+          {{ loading ? 'Logging in...' : 'Login' }}
         </button>
       </form>
     </div>
@@ -55,4 +47,4 @@
   <footer class="bg-black text-white text-center py-3 mt-auto">
     &copy; 2025 Maskan. All rights reserved.
   </footer>
-</div>  
+</div>

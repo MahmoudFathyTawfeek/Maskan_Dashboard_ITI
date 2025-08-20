@@ -1,140 +1,111 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Ilisting } from '../../models/ilisting';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { IListing } from '../../models/ilisting';
+import { environment } from '../../../environments/environment.development';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ThemeService } from '../../service/theme-service';
-import { environment } from '../../../environments/environment.development';
+
+interface IAmenity { _id: string; name: string; }
 
 @Component({
-  selector: 'app-admin-listings',
+  selector: 'app-listings-approval',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './admin-listings.html',
   styleUrls: ['./admin-listings.css']
 })
 export class AdminListingsComponent implements OnInit {
-  pendingListings: Ilisting[] = [];
-  loading = false;
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
-  // ✅ Toast + Rejection Modal
+  loading = false;
+  pendingListings: IListing[] = [];
+  paginatedListings: IListing[] = [];
+  currentPage = 1;
+  itemsPerPage = 6;
+  totalPages = 1;
   showToast = false;
   toastMessage = '';
   showRejectionModal = false;
   rejectionReason = '';
   selectedListingId: string | null = null;
-  isDarkMode: boolean = false;
+  isDarkMode = false;
 
-  // ✅ Pagination
-  currentPage = 1;
-  pageSize = 6;
-
-  constructor(
-    private http: HttpClient,
-    private cdr: ChangeDetectorRef,
-    private themeService: ThemeService
-  ) {
-    this.themeService.darkMode$.subscribe(mode => {
-      this.isDarkMode = mode;
-    });
-  }
+  amenities: IAmenity[] = [];
 
   ngOnInit(): void {
-    this.getPendingListings();
-  }
-
-  getPendingListings(): void {
     this.loading = true;
-    this.http.get<Ilisting[]>(`${environment.baseUrl}/listings?isApproved=false`)
-      .subscribe({
-        next: (data) => {
-          this.pendingListings = data;
-          this.loading = false;
-          this.cdr.detectChanges();
-        },
-        error: (err) => {
-          console.error('Error loading listings:', err);
-          this.loading = false;
-        }
+
+    // جلب amenities
+    this.http.get<IAmenity[]>(`${environment.baseUrl}/amenities`)
+      .subscribe(data => { this.amenities = data; });
+
+    // جلب الليستنج اللي في انتظار الموافقة
+    this.http.get<IListing[]>(`${environment.baseUrl}/pending-listings/pending`)
+      .subscribe(data => {
+        this.pendingListings = data;
+        this.totalPages = Math.ceil(this.pendingListings.length / this.itemsPerPage);
+        this.getPaginatedListings();
+        this.loading = false;
+        this.cdr.detectChanges();
       });
   }
 
-  // ✅ فتح نافذة سبب الرفض
-  openRejectionModal(id: string): void {
-    this.selectedListingId = id;
-    this.rejectionReason = '';
-    this.showRejectionModal = true;
+  getPaginatedListings() {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.paginatedListings = this.pendingListings.slice(start, end);
+    this.cdr.detectChanges();
   }
 
-  // ✅ غلق النافذة بدون رفض
-  closeRejectionModal(): void {
-    this.showRejectionModal = false;
-    this.selectedListingId = null;
-    this.rejectionReason = '';
-  }
-
-  // ✅ إرسال الرفض مع السبب
-  submitRejection(): void {
-    if (!this.selectedListingId || !this.rejectionReason.trim()) return;
-
-    const body = {
-      isApproved: false,
-      rejectionReason: this.rejectionReason.trim()
-    };
-
-    this.http.patch(`${environment.baseUrl}/listings/${this.selectedListingId}`, body)
-      .subscribe({
-        next: () => {
-          this.pendingListings = this.pendingListings.filter(l => l.id !== this.selectedListingId);
-          this.toastMessage = `Listing rejected: ${this.rejectionReason}`;
-          this.showToastMessage();
-          this.closeRejectionModal();
-        },
-        error: (err) => {
-          console.error('Rejection failed:', err);
-        }
-      });
-  }
-
-  // ✅ الموافقة
-  approveListing(id: string): void {
-    this.http.patch(`${environment.baseUrl}/listings/${id}`, { isApproved: true })
-      .subscribe({
-        next: () => {
-          this.pendingListings = this.pendingListings.filter(l => l.id !== id);
-          this.cdr.detectChanges();
-        },
-        error: (err) => {
-          console.error('Approval failed:', err);
-        }
-      });
-  }
-
-  // ✅ Toast
-  showToastMessage(): void {
-    this.showToast = true;
-    setTimeout(() => this.showToast = false, 3000);
-  }
-
-  hideToast(): void {
-    this.showToast = false;
-  }
-
-  // ✅ Pagination logic
-  get paginatedListings(): Ilisting[] {
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    return this.pendingListings.slice(startIndex, startIndex + this.pageSize);
-  }
-
-  get totalPages(): number {
-    return Math.ceil(this.pendingListings.length / this.pageSize);
-  }
-
-  goToPage(page: number): void {
+  goToPage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
+      this.getPaginatedListings();
       this.cdr.detectChanges();
     }
   }
+
+  getAmenityName(id: string): string {
+    const amenity = this.amenities.find(a => a._id === id);
+    return amenity ? amenity.name : id;
+  }
+
+  approveListing(id: string) {
+    this.http.put(`${environment.baseUrl}/pending-listings/${id}/approve`, {}).subscribe(() => {
+      this.toastMessage = 'Listing approved!';
+      this.showToast = true;
+      this.pendingListings = this.pendingListings.filter(l => l._id !== id);
+      this.totalPages = Math.ceil(this.pendingListings.length / this.itemsPerPage);
+      this.getPaginatedListings();
+      setTimeout(() => this.showToast = false, 2000);
+    });
+  }
+
+  openRejectionModal(id: string) {
+    this.selectedListingId = id;
+    this.showRejectionModal = true;
+  }
+
+  closeRejectionModal() {
+    this.showRejectionModal = false;
+    this.rejectionReason = '';
+    this.selectedListingId = null;
+  }
+
+  submitRejection() {
+    if (!this.selectedListingId) return;
+    this.http.put(`${environment.baseUrl}/pending-listings/${this.selectedListingId}/reject`, {
+      rejectionReason: this.rejectionReason
+    }).subscribe(() => {
+      this.toastMessage = 'Listing rejected!';
+      this.showToast = true;
+      this.pendingListings = this.pendingListings.filter(l => l._id !== this.selectedListingId);
+      this.totalPages = Math.ceil(this.pendingListings.length / this.itemsPerPage);
+      this.getPaginatedListings();
+      this.closeRejectionModal();
+      setTimeout(() => this.showToast = false, 2000);
+    });
+  }
+
+  hideToast() { this.showToast = false; }
 }

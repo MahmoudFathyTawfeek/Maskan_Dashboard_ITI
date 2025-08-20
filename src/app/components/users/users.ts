@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Iuser } from '../../models/iuser';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment.development';
@@ -17,31 +17,42 @@ import { ThemeService } from '../../service/theme-service';
 export class UsersComponent implements OnInit {
   http = inject(HttpClient);
   users: Iuser[] = [];
-  filteredUsers: Iuser[] = []; 
-   loading = false;
- isDarkMode: boolean = false;
+  filteredUsers: Iuser[] = [];
+  loading = false;
+  isDarkMode = false;
   currentPage = 1;
-  pageSize = 7;
+  pageSize = 10;
 
   searchEmail = '';
-  searchError = ''; 
+  searchError = '';
 
+  totalHosts = 0;
+  totalGuests = 0;
+  occupancyRate = 0;
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private router: Router // ← أضفنا Router هنا
   ) {
-     this.themeService.darkMode$.subscribe(mode => {
+    this.themeService.darkMode$.subscribe(mode => {
       this.isDarkMode = mode;
     });
   }
 
   ngOnInit(): void {
-     this.loading = true;
+    this.loading = true;
     this.http.get<Iuser[]>(`${environment.baseUrl}/users`).subscribe(data => {
       this.users = data;
       this.filteredUsers = data;
-       this.loading = false;
+
+      this.totalHosts = this.users.filter(u => u.role?.toLowerCase() === 'host').length;
+      this.totalGuests = this.users.filter(u => u.role?.toLowerCase() === 'guest').length;
+
+      const totalUsers = this.users.length;
+      this.occupancyRate = totalUsers > 0 ? Math.round((this.totalHosts / totalUsers) * 100) : 0;
+
+      this.loading = false;
       this.cdr.detectChanges();
     });
   }
@@ -67,11 +78,11 @@ export class UsersComponent implements OnInit {
     return Math.ceil(this.filteredUsers.length / this.pageSize);
   }
 
-  deleteUser(id: number | string) {
+  deleteUser(id: string) {
     if (confirm('Are you sure you want to delete this user?')) {
       this.http.delete(`${environment.baseUrl}/users/${id}`).subscribe(() => {
-        this.users = this.users.filter(user => user.id !== id);
-        this.filteredUsers = this.filteredUsers.filter(user => user.id !== id);
+        this.users = this.users.filter(user => user._id !== id);
+        this.filteredUsers = this.filteredUsers.filter(user => user._id !== id);
         alert('User deleted successfully');
         this.cdr.detectChanges();
       }, error => {
@@ -79,6 +90,10 @@ export class UsersComponent implements OnInit {
         console.error(error);
       });
     }
+  }
+
+  editUser(id: string) {
+    this.router.navigate(['/users/update', id]); // ← هنا هينقلك لصفحة تعديل المستخدم
   }
 
   searchByEmail() {

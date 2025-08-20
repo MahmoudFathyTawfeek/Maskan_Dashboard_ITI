@@ -1,80 +1,92 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../../environments/environment.development';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { Ilisting } from '../../models/ilisting';
+import { FormsModule } from '@angular/forms';
+import { ListingService } from '../../service/listing';
+import { ThemeService } from '../../service/theme-service';
+import { IListing } from '../../models/ilisting';
 
 @Component({
   selector: 'app-listings',
+  imports: [CommonModule, RouterModule, FormsModule],
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule],
   templateUrl: './listings.html',
   styleUrls: ['./listings.css']
 })
 export class ListingsComponent implements OnInit {
-  http = inject(HttpClient);
-  listings: Ilisting[] = [];
-  paginatedListings: Ilisting[] = [];
+  listings: IListing[] = [];
+  filteredListings: IListing[] = [];
+  loading = true;
+  error: string | null = null;
+
   currentPage = 1;
-  itemsPerPage = 8;
-  totalPages = 1;
-  users: {id:string; email: string; name:string }[]=[];
-  loading = false;
+  pageSize = 8;
+  isDarkMode = false;
 
-  constructor(private cdr: ChangeDetectorRef) {}
-
-  ngOnInit(): void {
-    this.loading=true;
-    this.http.get<Ilisting[]>(`${environment.baseUrl}/listings`).subscribe(data => {
-      this.listings = data;
-      this.totalPages = Math.ceil(this.listings.length / this.itemsPerPage);
-      this.getPaginatedListings();
-      this.cdr.detectChanges();
-       this.loadUsers();
-       this.loading=false;
-      console.log(this.listings);
+  constructor(
+    private listingService: ListingService,
+    private cdr: ChangeDetectorRef,
+    private themeService: ThemeService
+  ) {
+    this.themeService.darkMode$.subscribe(mode => {
+      this.isDarkMode = mode;
     });
   }
-  loadUsers() {
-    this.http.get<{ id: string; email: string, name: string }[]>(`${environment.baseUrl}/users`)
-      .subscribe(data => {
-        this.users = data;
-        this.cdr.detectChanges();
-        console.log('Users:', this.users);
-      });
+
+  ngOnInit(): void {
+    this.loadListings();
   }
-  getPaginatedListings() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedListings = this.listings.slice(startIndex, endIndex);
+
+  loadListings() {
+    this.loading = true;
+    this.error = null;
+
+    this.listingService.getListings().subscribe({
+      next: (data) => {
+        console.log('Listings data:', data); // للتأكد من البيانات
+        this.listings = data;
+        this.filteredListings = data;
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error loading listings:', err);
+        this.error = 'Failed to load listings. Please try again.';
+        this.loading = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  get paginatedListings(): IListing[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.filteredListings.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  deleteListing(listingId: string) {
+    if (!confirm('Are you sure you want to delete this listing?')) return;
+
+    this.listingService.deleteListing(listingId).subscribe({
+      next: () => {
+        this.listings = this.listings.filter(l => l._id !== listingId);
+        this.filteredListings = this.filteredListings.filter(l => l._id !== listingId);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Delete failed:', err);
+        alert('Failed to delete listing');
+      }
+    });
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredListings.length / this.pageSize);
   }
 
   goToPage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
-      this.getPaginatedListings();
-    }
-  }
-   getUserEmail(hostId: string): string {
-    const user = this.users.find(u => u.id === hostId);
-    return user ? user.email : 'Unknown';
-  }
-
-  deleteListing(id: number | string) {
-    if (confirm('This ads will be delete')) {
-      this.http.delete(`${environment.baseUrl}/listings/${id}`).subscribe(() => {
-        this.listings = this.listings.filter(listing => listing.id !== id);
-        this.totalPages = Math.ceil(this.listings.length / this.itemsPerPage);
-        if (this.currentPage > this.totalPages) {
-          this.currentPage = this.totalPages;
-        }
-        this.getPaginatedListings();
-        alert('Deleted successfully');
-      }, error => {
-        alert('There is an error');
-        console.error(error);
-      });
+      this.cdr.detectChanges();
     }
   }
 }

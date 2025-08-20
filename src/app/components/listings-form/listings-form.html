@@ -6,21 +6,23 @@
   <!-- Main Content -->
   <div class="col-md-10 col-12 p-4">
     <div class="row justify-content-between align-items-center">
-      <h3 class="col-md-8">Add new listing</h3>
+      <h3 class="col-md-8">Add New Listing</h3>
       <button class="btn btn-primary col-md-2" [routerLink]="['/listings']">Back</button>
     </div>
 
     <form [formGroup]="listingForm" (ngSubmit)="addListing()" class="m-2 p-3 rounded-3 border border-primary">
 
-      <!-- Title and Host ID -->
+      <!-- Title and Host -->
       <div class="row mb-3">
         <div class="col-md-6">
           <label class="form-label">Title</label>
           <input type="text" class="form-control" formControlName="title" />
         </div>
         <div class="col-md-6">
-          <label class="form-label">Host ID</label>
-          <input type="text" class="form-control" formControlName="hostId" />
+          <label class="form-label">Host</label>
+          <select class="form-select" formControlName="hostId">
+            <option *ngFor="let host of hosts" [value]="host._id">{{ host.userName }}</option>
+          </select>
         </div>
       </div>
 
@@ -31,8 +33,10 @@
           <input type="number" class="form-control" formControlName="pricePerNight" />
         </div>
         <div class="col-md-6">
-          <label class="form-label">Category ID</label>
-          <input type="text" class="form-control" formControlName="categoryId" />
+          <label class="form-label">Category</label>
+          <select class="form-select" formControlName="categoryId">
+            <option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</option>
+          </select>
         </div>
       </div>
 
@@ -40,82 +44,75 @@
       <div class="row mb-3">
         <div class="col-md-6">
           <label class="form-label">Location Type</label>
-          <select class="form-control" formControlName="locationType">
-            <option value="Seaside">Seaside</option>
-            <option value="City">City</option>
-            <option value="Mountain">Mountain</option>
-            <option value="Rural">Rural</option>
+          <select class="form-select" formControlName="locationType">
+            <option *ngFor="let loc of locationTypes" [value]="loc">{{ loc }}</option>
           </select>
         </div>
         <div class="col-md-6">
-          <label class="form-label">Location</label>
-          <input type="text" class="form-control" formControlName="Location" />
+          <label class="form-label">Governorate</label>
+          <select class="form-select" formControlName="governorate">
+            <option *ngFor="let gov of governorates" [value]="gov">{{ gov }}</option>
+          </select>
         </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Location</label>
+        <input type="text" class="form-control" formControlName="location" />
       </div>
 
       <!-- Description -->
       <div class="mb-3">
         <label class="form-label">Description</label>
-        <textarea rows="3" class="form-control" formControlName="descyption"></textarea>
+        <textarea rows="3" class="form-control" formControlName="description"></textarea>
       </div>
 
-      <!-- Amenities and Max Guests -->
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Amenities ID</label>
-          <input type="text" class="form-control" formControlName="amenitiesId" />
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Max Guests</label>
-          <input type="number" class="form-control" formControlName="maxGusts" />
+      <!-- Amenities -->
+      <div class="mb-3">
+        <label class="form-label">Amenities</label>
+        <div class="row">
+          <div class="col-md-6" *ngFor="let amenity of amenitiesList">
+            <div class="form-check d-flex align-items-center gap-2 mb-1">
+              <input class="form-check-input" type="checkbox"
+                     [checked]="amenitiesId.value.includes(amenity._id)"
+                     (change)="toggleAmenity(amenity._id)" />
+              <img *ngIf="amenity.icon" [src]="amenity.icon" width="24" height="24" alt="icon">
+              <label class="form-check-label">{{ amenity.name }}</label>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- 📸 Photos Array -->
+      <!-- Max Guests -->
+      <div class="mb-3">
+        <label class="form-label">Max Guests</label>
+        <input type="number" class="form-control" formControlName="maxGuests" />
+      </div>
+
+      <!-- Photos Array -->
       <div class="mb-3">
         <label class="form-label">Photos URLs</label>
         <div formArrayName="photos">
-          <div
-            class="d-flex align-items-center mb-2"
-            *ngFor="let photo of photos.controls; let i = index"
-          >
-            <input
-              class="form-control me-2"
-              [formControlName]="i"
-              placeholder="Enter photo URL"
-            />
-            <button
-              type="button"
-              class="btn btn-danger btn-sm me-1"
-              (click)="removePhotoField(i)"
-              [disabled]="photos.length === 1"
-            >
+          <div class="d-flex align-items-center mb-2" *ngFor="let photo of photos.controls; let i = index">
+            <input class="form-control me-2" [formControlName]="i" placeholder="Enter photo URL" />
+            <button type="button" class="btn btn-danger btn-sm me-1" (click)="removePhotoField(i)" [disabled]="photos.length === 1">
               Remove
             </button>
           </div>
         </div>
-        <button type="button" class="btn btn-outline-primary btn-sm" (click)="addPhotoField()">
-          + Add Photo
-        </button>
+        <button type="button" class="btn btn-outline-primary btn-sm" (click)="addPhotoField()">+ Add Photo</button>
       </div>
 
-      <!-- Average Rate -->
+      <!-- Average Rating -->
       <div class="mb-3">
-        <label class="form-label">Average Rate</label>
-        <input
-          type="number"
-          class="form-control"
-          formControlName="averageRate"
-          min="0"
-          max="5"
-          step="0.1"
-        />
+        <label class="form-label">Average Rating</label>
+        <input type="number" class="form-control" formControlName="averageRating" min="0" max="5" step="0.1" />
       </div>
 
-      <!-- Is Approved -->
+      <!-- Approved -->
       <div class="mb-3">
         <label class="form-label">Is Approved</label>
-        <select class="form-control" formControlName="isApproved">
+        <select class="form-select" formControlName="isApproved">
           <option [value]="true">Yes</option>
           <option [value]="false">No</option>
         </select>

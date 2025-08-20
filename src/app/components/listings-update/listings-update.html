@@ -6,99 +6,83 @@
 
   <!-- Main Content -->
   <div class="col-md-10 col-12 p-4">
-    <div class="row justify-content-between align-items-center">
-      <h3 class="col-md-8 text-primary">Update listing</h3>
+    <div class="row justify-content-between align-items-center mb-3">
+      <h3 class="col-md-8 text-primary">Update Listing</h3>
       <button class="btn btn-primary col-md-2" [routerLink]="['/listings']">Back</button>
     </div>
 
-    <form [formGroup]="listingForm" (ngSubmit)="updateListing()" class="m-2 p-3 rounded-3 border border-primary">
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Title</label>
-          <input type="text" class="form-control" formControlName="title">
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Host ID</label>
-          <input type="text" class="form-control" formControlName="hostId">
-        </div>
-      </div>
+    <form [formGroup]="listingForm" (ngSubmit)="updateListing()">
 
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Price Per Night</label>
-          <input type="number" class="form-control" formControlName="pricePerNight">
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Category ID</label>
-          <input type="text" class="form-control" formControlName="categoryId">
-        </div>
-      </div>
+      <label>Title:</label>
+      <input formControlName="title" class="form-control mb-2" />
 
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Location Type</label>
-          <select class="form-control" formControlName="locationType">
-            <option value="Seaside">Seaside</option>
-            <option value="City">City</option>
-            <option value="Mountain">Mountain</option>
-            <option value="Rural">Rural</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Location</label>
-          <input type="text" class="form-control" formControlName="Location">
-        </div>
-      </div>
+      <label>Host:</label>
+      <select formControlName="hostId" class="form-select mb-2">
+        <option *ngFor="let host of hosts" [value]="host._id">{{ host.userName }}</option>
+      </select>
 
-      <div class="mb-3">
-        <label class="form-label">Description</label>
-        <textarea rows="3" class="form-control" formControlName="descyption"></textarea>
-      </div>
+      <label>Description:</label>
+      <textarea formControlName="description" class="form-control mb-2"></textarea>
 
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Amenities ID</label>
-          <input type="text" class="form-control" formControlName="amenitiesId">
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Max Guests</label>
-          <input type="number" class="form-control" formControlName="maxGusts">
-        </div>
-      </div>
+      <label>Price per Night:</label>
+      <input type="number" formControlName="pricePerNight" class="form-control mb-2" />
 
-      <div class="row mb-3">
-      <!-- ✅ Photos Array -->
-      <div class="col-md-6 mb-3" formArrayName="photos">
-        <label class="form-label">Photos URLs</label>
+      <label>Category:</label>
+      <select formControlName="categoryId" class="form-select mb-2">
+        <option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</option>
+      </select>
 
-        <div *ngFor="let photo of photos.controls; let i = index" class="col-12 d-flex align-items-center gap-2 mb-2">
-          <input type="text" class="form-control" [formControlName]="i" placeholder="Photo URL">
-          <button type="button" class="btn btn-sm  btn-outline-danger px-2" (click)="removePhotoField(i)">
-             Remove
-          </button>
-        </div>
-        <div class="col-md-6">
-          <button type="button" class="btn btn-sm btn-success" (click)="addPhotoField()">+ Add Photo</button>
-        </div>
-      </div>
-      <div class="col-6 mb-3">
-        <div class="col-md-12">
-          <label class="form-label">Average Rate</label>
-          <input type="number" class="form-control" formControlName="averageRate" min="0" max="5" step="0.1">
-        </div>
-      </div>
+      <label>Location Type:</label>
+      <select formControlName="locationType" class="form-select mb-2">
+        <option *ngFor="let loc of locationTypes" [value]="loc.toLowerCase()">{{ loc }}</option>
+      </select>
+
+      <label>Governorate:</label>
+      <select formControlName="governorate" class="form-select mb-2">
+        <option *ngFor="let gov of listingForm.get('governorate')?.value | keyvalue" [value]="gov">{{ gov }}</option>
+        <option *ngFor="let gov of [
+          'Cairo','Giza','Alexandria','Qalyubia','PortSaid','Suez','Dakahlia','Sharqia',
+          'Gharbia','Monufia','Beheira','KafrElSheikh','Fayoum','BeniSuef','Minya','Assiut',
+          'Sohag','Qena','Luxor','Aswan','RedSea','NewValley','Matrouh','NorthSinai','SouthSinai'
+        ]" [value]="gov">{{ gov }}</option>
+      </select>
+
+      <label>Location Address:</label>
+      <input formControlName="location" class="form-control mb-2" />
+
+    <label>Amenities:</label>
+<div class="row mb-3">
+  <div class="col-md-6 mb-2" *ngFor="let amenity of amenitiesList">
+    <div class="form-check d-flex align-items-center gap-2 p-2 border rounded">
+      <input class="form-check-input" type="checkbox"
+             [checked]="amenitiesId.value.includes(amenity._id)"
+             (change)="toggleAmenity(amenity._id)" />
+      <img *ngIf="amenity.icon" [src]="amenity.icon" alt="{{amenity.name}}" width="24" height="24">
+      <label class="form-check-label mb-0">{{ amenity.name }}</label>
     </div>
-      <div class="mb-3">
-        <label class="form-label">Is Approved</label>
-        <select class="form-control" formControlName="isApproved">
-          <option [value]="true">Yes</option>
-          <option [value]="false">No</option>
-        </select>
+  </div>
+</div>
+
+
+      <label>Max Guests:</label>
+      <input type="number" formControlName="maxGuests" class="form-control mb-2" />
+
+      <label>Photos:</label>
+      <div *ngFor="let photo of photos.controls; let i = index" class="d-flex gap-2 mb-2">
+        <input [formControl]="$any(photo)" class="form-control" placeholder="Photo URL" />
+        <button type="button" class="btn btn-danger btn-sm" (click)="removePhotoField(i)">Remove</button>
       </div>
-    <div class=" col-md-12 text-center">
-      <button type="submit" class="btn btn-primary col-3" >Save Changes</button> 
-    </div>
+      <button type="button" class="btn btn-primary btn-sm mb-3" (click)="addPhotoField()">Add Photo</button>
+
+      <label>Average Rating:</label>
+      <input type="number" formControlName="averageRating" class="form-control mb-2" />
+
+      <div class="form-check mb-3">
+        <input type="checkbox" formControlName="isApproved" class="form-check-input" />
+        <label class="form-check-label">Approved</label>
+      </div>
+
+      <button type="submit" class="btn btn-success">Update Listing</button>
     </form>
-   
   </div>
 </div>

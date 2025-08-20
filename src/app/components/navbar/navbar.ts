@@ -13,16 +13,17 @@ import { CommonModule } from '@angular/common';
   styleUrl: './navbar.css'
 })
 export class Navbar {
-  userLogedInNav: boolean = false;
+  // userLogedInNav: boolean = false;
   isDarkMode: boolean = false;
 
   constructor(
     private userAuth: Authintication,
     private themeService: ThemeService
   ) {
-    this.userAuth.userloggedmethod().subscribe((data) => {
-      this.userLogedInNav = data;
-    });
+//   this.userAuth.userloggedmethod().subscribe((data: any) => {
+//   console.log(data);
+// });
+
 
     this.themeService.darkMode$.subscribe(mode => {
       this.isDarkMode = mode;

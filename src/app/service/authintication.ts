@@ -1,37 +1,18 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Authintication {
+  private apiUrl = `${environment.baseUrl}/users`;
 
-  propsub:BehaviorSubject<boolean>
-  constructor() {
-    this.propsub=new BehaviorSubject<boolean>(false)
-   }
+  constructor(private http: HttpClient) {}
 
-
-  login(username:string,password:string){
-
-    let token="mahmoudtawfeek"
-
-    localStorage.setItem('Token',token)
-
-    this.propsub.next(true)
-  }
-
-  logout(){
-    localStorage.removeItem('Token')
-
-       this.propsub.next(true)
-  }
-
-  get userLoged():boolean{
-    return (localStorage.getItem('Token'))?true:false
-  }
-
-  userloggedmethod(){
-    return this.propsub
+  // بيرجع كل اليوزرز
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 }

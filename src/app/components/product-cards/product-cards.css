@@ -14,3 +14,13 @@
   background-color: #071d2c !important; /* لون ثابت */
   color: #e0e9f1 !important;           /* نصوص ثابتة */
 }
+
+.amenity-form {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+.table-hover tbody tr:hover {
+  background-color: #e9ecef;
+}

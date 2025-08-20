@@ -1,106 +1,83 @@
-<div class="d-flex">
-
+<div class="d-flex flex-wrap">
   <!-- Sidebar -->
-<div class="col-md-2 text-white p-3 d-none d-md-block text-center" style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">   
-  
-
+  <div class="col-12 col-md-2 text-white p-3 d-none d-md-block text-center"
+       style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">
   </div>
 
   <!-- Main Content -->
-   <div class="col-md-10 col-12 p-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>All Users</h3>
-    <a routerLink="/users/add" class="btn btn-primary">+ Add User</a>
-  </div>
+  <div class="col-12 col-md-10 p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3>Users List</h3>
+      <!-- زر Add User -->
+      <button class="btn btn-success" [routerLink]="['/users/add']">
+        ➕ Add User
+      </button>
+    </div>
 
-  <!--  search-->
-  <div class="input-group mb-3 mb-3 g-2 ">
-    <input
-      type="email"
-      [(ngModel)]="searchEmail"
-      class="form-control col-md-3"
-      placeholder="Search by E-Mail"
-    />
-    <button class="btn btn-outline-primary col-md-3" (click)="searchByEmail()">🔍 Search</button>
-  </div>
-
-  <!--  error message -->
-  <div *ngIf="searchError" class="alert alert-warning text-center">
-    {{ searchError }}
-  </div>
-
- <table class="table table-bordered  table-hover " 
-        *ngIf="paginatedUsers.length > 0" [ngClass]="isDarkMode ? 'bg-black text-light' : 'bg-light text-dark'"
-        style="border: 1px solid rgb(61, 4, 114);">
-  <thead class=" text-center">
-    <tr>
-      <th>Name</th>
-      <th>E-Mail</th>
-      <th>Phone</th>
-      <th>Password</th>
-      <th>Gender</th>
-      <th>Date of Birth</th>
-      <th>Verified</th>
-      <th>Type</th>
-      <th>Delete</th>
-      <th>Update</th>
-    </tr>
-  </thead>
-
-  <tbody class="text-center " [ngClass]="isDarkMode ? 'bg-black text-light' : 'bg-light text-dark'">
-       <!-- Loader -->
-      <div *ngIf="loading" class="text-center my-5">
-        <div class="spinner-border text-primary" role="status"></div>
-        <p class="mt-2">Loading listings...</p>
+    <!-- Search  -->
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <!-- Search Input -->
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search by Email..."
+               [(ngModel)]="searchEmail" (keyup.enter)="searchByEmail()">
+        <button class="btn btn-outline-secondary" (click)="searchByEmail()">Search 🔍</button>
       </div>
-    <tr *ngFor="let user of paginatedUsers" >
-      <td>{{ user.name }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.phone || 'Not Found' }}</td>
-     <td>{{ user.password ? '••••••••' : 'No Password' }}</td>
-      <td>{{ user.gender || 'Not specified' }}</td>
-      <td>{{ user.dateOfBirth || 'N/A' }}</td>
-      <td>
-        <span class="badge" [ngClass]="user.isVerified ? 'bg-success' : 'bg-danger'">
-          {{ user.isVerified ? 'Verified' : 'Not Verified' }}
-        </span>
-      </td>
-      <td>
-        <span class="badge" [ngClass]="user.isAdmin ? 'bg-success' : 'bg-secondary'">
-          {{ user.isAdmin ? 'Host' : 'Guest' }}
-        </span>
-      </td>
-      <td>
-        <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id!)">🗑️</button>
-      </td>
-      <td>
-        <a [routerLink]="['/users/update', user.id]" class="btn btn-warning btn-sm">
-          ✏️
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- pagination -->
-  <div *ngIf="paginatedUsers.length > 0" class="d-flex justify-content-center align-items-center gap-2 mt-3">
-    <button
-      class="btn btn-primary btn-sm"
-      (click)="prevPage()"
-      [disabled]="currentPage === 1"
-    >
-       ◀ Previous
-    </button>
-
-    <span> {{ currentPage }} / {{ totalPages }}</span>
-
-    <button
-      class="btn btn-primary btn-sm"
-      (click)="nextPage()"
-      [disabled]="currentPage * pageSize >= filteredUsers.length"
-    >
-        Next ▶
-    </button>
+    </div>
+<div class="table-responsive">
+ 
+    <table class="table table-bordered table-hover table-sm align-middle text-center"
+    *ngIf="users.length > 0" [ngClass]="isDarkMode ? 'bg-black text-light' : 'bg-light text-dark'">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Verified</th>
+          <th>Created</th>
+          <th>Updated</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of paginatedUsers; index as i">
+          <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+          <td>{{ user.userName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <span [class.text-success]="user.isVerified" [class.text-danger]="!user.isVerified">
+              {{ user.isVerified ? 'Yes' : 'No' }}
+            </span>
+          </td>
+          <td>{{ user.createdAt | date: 'short' }}</td>
+          <td>{{ user.updatedAt | date: 'short' }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm me-1" (click)="editUser(user._id!)">
+              ✏️ Edit
+            </button>
+            
+            <button class="btn btn-danger btn-sm" (click)="deleteUser(user._id!)">
+              🗑️ Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-</div>
+
+    <!-- Pagination Controls -->
+    <div class="d-flex justify-content-center mt-2 ">
+      <button class="btn btn-secondary mr-3" [disabled]="currentPage === 1" (click)="prevPage()">
+        ←   Prev
+      </button>
+      <!-- Page Info -->
+      <div class="m-3">
+        Page {{currentPage}} of {{ totalPages }}
+      </div>
+      <button class="btn btn-secondary" [disabled]="currentPage === totalPages" (click)="nextPage()">
+        Next   →
+      </button>
+    </div>
+  </div>
 </div>

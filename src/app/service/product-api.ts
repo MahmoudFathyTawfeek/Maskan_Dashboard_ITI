@@ -1,34 +1,30 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Iproducts } from '../models/iproducts';
-import { map, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Iunit } from '../models/iunit';
 import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductAPI {
+export class AmenityService {
+  private baseUrl = `${environment.baseUrl}/amenities`;
 
-  constructor(private http:HttpClient)
-   {
-   }
+  constructor(private http: HttpClient) {}
 
-      getAllProducts():Observable<Iproducts[]>{
-
-      return this.http.get<Iproducts[]>(`${environment.baseUrl}/products`)
-    }
-
-    getProductById(prd:number):Observable<Iproducts>{
-
-    return this.http.get<Iproducts>(`${environment.baseUrl}/products/${prd}`)
+  getAllAmenities(): Observable<Iunit[]> {   
+    return this.http.get<Iunit[]>(this.baseUrl);
   }
 
-  search(value:string):Observable<Iproducts[]>{
-        
-    return this.http.get<Iproducts[]>(`${environment.baseUrl}/products?product=${value}`)
+  addAmenity(amenity: Iunit): Observable<Iunit> {
+    return this.http.post<Iunit>(this.baseUrl, amenity);
   }
 
-  getAllIds():Observable <number[]>{
-return this.getAllProducts().pipe(map((pro)=>pro.map((pro2)=>pro2.id)))
-}
+  updateAmenity(id: string, amenity: Partial<Iunit>): Observable<Iunit> {
+    return this.http.patch<Iunit>(`${this.baseUrl}/${id}`, amenity);
+  }
+
+  deleteAmenity(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
 }

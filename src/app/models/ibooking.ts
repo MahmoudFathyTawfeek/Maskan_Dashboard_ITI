@@ -2,10 +2,10 @@ export interface Ibooking {
   id: number;
   userId: string;
   listingId: string;
-  checkInDate:Date;
-  checkOutDate: Date;
+  checkIn:Date;
+  checkOut: Date;
   totalPrice: number;
-  paymentStatus: 'Paid' | 'Pending' | 'Failed';
+  paymentStatus: 'paid' | 'pending' | 'failed';
   paymentMethod: 'stripo' | 'paypal' ;
   createdAt: Date;
 

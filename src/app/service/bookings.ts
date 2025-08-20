@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Ibooking } from '../models/ibooking';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
-  private bookingsUrl = 'http://localhost:3000/bookings';
-  private unitsUrl = 'http://localhost:3000/units';
+  private bookingsUrl = `${environment.baseUrl}/bookings`;
+  private unitsUrl = `${environment.baseUrl}/units`;
 
   constructor(private http: HttpClient) {}
 

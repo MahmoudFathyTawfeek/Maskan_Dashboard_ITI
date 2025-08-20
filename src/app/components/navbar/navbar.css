@@ -75,3 +75,14 @@ body.bg-light {
   background-color: #6e88a1 !important;
   color: #212529 !important;
 }
+#sidebarMenu {
+  width: 250px;
+  min-height: 100vh;
+  border-right: none !important;
+  box-shadow: none !important;
+}
+
+main {
+  margin-left: 250px; /* نفس عرض الـ sidebar */
+  padding: 20px;
+}

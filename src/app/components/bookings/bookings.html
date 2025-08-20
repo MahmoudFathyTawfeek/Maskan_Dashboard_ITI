@@ -22,9 +22,9 @@
   <div class="col-md-3">
     <select class="form-select" [(ngModel)]="filterStatus" (change)="applyFilters()">
       <option value="">Booking Status</option>
-      <option value="Paid">Paid</option>
-      <option value="Pending">Pending</option>
-      <option value="Failed">Failed</option>
+      <option value="paid">paid</option>
+      <option value="pending">pending</option>
+      <option value="failed">failed</option>
     </select>
   </div>
   <div class="col-md-3">
@@ -54,15 +54,15 @@
       <td>{{ booking.id }}</td>
       <td>{{ getUserEmail(booking.userId) }}</td>
       <td>{{ getAdTitle(booking.listingId) }}</td>
-      <td>{{ booking.checkInDate | date: 'mediumDate' }}</td>
-      <td>{{ booking.checkOutDate | date: 'mediumDate' }}</td>
+      <td>{{ booking.checkIn | date: 'mediumDate' }}</td>
+      <td>{{ booking.checkOut | date: 'mediumDate' }}</td>
       <td>{{ booking.totalPrice | currency }}</td>
       <td>
         <span class="badge"
               [ngClass]="{
-                'bg-success': booking.paymentStatus === 'Paid',
-                'bg-warning text-dark': booking.paymentStatus === 'Pending',
-                'bg-danger': booking.paymentStatus === 'Failed'
+                'bg-success': booking.paymentStatus === 'paid',
+                'bg-warning text-dark': booking.paymentStatus === 'pending',
+                'bg-danger': booking.paymentStatus === 'failed'
               }">
           {{ booking.paymentStatus }}
         </span>

@@ -1,11 +1,11 @@
 export interface Iuser {
-  id?: number | string;
-  name: string;
+  _id?: string;
+  userName: string;
   email: string;
-  phone?: string;
-  password: string;
-  gender: 'male' | 'female';
-  dateOfBirth: Date; 
-  isAdmin?: boolean;
+  profilePic?: string;
+  role: 'host' | 'guest' | 'admin';
   isVerified: boolean;
+  createdAt?: string; // ISO date string
+  updatedAt?: string; // ISO date string
+  passwordChangedAt?: string; // ISO date string
 }

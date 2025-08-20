@@ -64,5 +64,18 @@ h3 {
   align-items: center;
 
 }
+.chart-card {
+  height: 400px; /* أو أي رقم يناسبك */
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-card .card-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 

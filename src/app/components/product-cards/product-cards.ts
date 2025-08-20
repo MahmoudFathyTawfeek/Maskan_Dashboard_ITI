@@ -1,70 +1,99 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Iunit } from '../../models/iunit';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { environment } from '../../../environments/environment.development';
-import { ThemeService } from '../../service/theme-service';
+import { IAmenity } from '../../models/iamenity';
 
 @Component({
-  selector: 'app-units',
+  selector: 'app-amenities',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, FormsModule, RouterModule],
   templateUrl: './product-cards.html',
   styleUrls: ['./product-cards.css']
 })
-export class UnitsComponent implements OnInit {
+export class AmenitiesComponent implements OnInit {
   http = inject(HttpClient);
-  units: Iunit[] = [];
-  loading=false;
-  paginatedUnits: Iunit[] = [];
-  currentPage = 1;
-  itemsPerPage = 4;
-  totalPages = 1;
-   isDarkMode: boolean = false;
+  amenities: IAmenity[] = [];
+  isDarkMode = false;
+  selectedAmenity: IAmenity = { _id: '', name: '', createdAt: new Date(), icon: '' };
 
-  constructor(private cdr: ChangeDetectorRef,  private themeService: ThemeService
-    ) {
-       this.themeService.darkMode$.subscribe(mode => {
-        this.isDarkMode = mode;
-      });
-    }
+  loading = false;
+  currentPage = 1;
+  pageSize = 7;
+  searchTerm = '';
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
   ngOnInit(): void {
-    this.loading=true;
-    this.http.get<Iunit[]>(`${environment.baseUrl}/units`).subscribe((data) => {
-      this.units = data;
-      this.totalPages = Math.ceil(this.units.length / this.itemsPerPage);
-      this.getPaginatedUnits();
-      this.loading=false;
+    this.fetchAmenities();
+  }
+
+  fetchAmenities() {
+    this.loading = true;
+    this.http.get<IAmenity[]>(`${environment.baseUrl}/amenities`).subscribe(data => {
+      this.amenities = data;
+      this.loading = false;
       this.cdr.detectChanges();
     });
   }
 
-  getPaginatedUnits() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedUnits = this.units.slice(startIndex, endIndex);
+  get filteredAmenities(): IAmenity[] {
+    if (!this.searchTerm) return this.amenities;
+    return this.amenities.filter(a =>
+      a.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
-  goToPage(page: number) {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-      this.getPaginatedUnits();
+  get paginatedAmenities(): IAmenity[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.filteredAmenities.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  nextPage() {
+    if (this.currentPage * this.pageSize < this.filteredAmenities.length) {
+      this.currentPage++;
     }
   }
 
-  deleteunit(id: string) {
-    if (confirm(`Unit ${id} will be deleted`)) {
-      this.http.delete(`${environment.baseUrl}/units/${id}`).subscribe(() => {
-        this.units = this.units.filter(unit => unit.id !== id);
-        this.totalPages = Math.ceil(this.units.length / this.itemsPerPage);
-        if (this.currentPage > this.totalPages) this.currentPage = this.totalPages || 1;
-        this.getPaginatedUnits();
-        this.cdr.detectChanges();
-        alert(`Unit deleted successfully`);
-      }, error => {
-        alert(`Failed to delete unit ${id}`);
-        console.error(error);
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  selectAmenity(amenity: IAmenity) {
+    this.selectedAmenity = { ...amenity };
+  }
+
+  cancelEdit() {
+    this.selectedAmenity = { _id: '', name: '', createdAt: new Date(), icon: '' };
+  }
+
+  saveAmenity() {
+    if (this.selectedAmenity._id) {
+      // تحديث
+      this.http.put(`${environment.baseUrl}/amenities/${this.selectedAmenity._id}`, this.selectedAmenity)
+        .subscribe(() => {
+          this.fetchAmenities();
+          this.cancelEdit();
+        });
+    } else {
+      // إضافة جديد
+      this.http.post(`${environment.baseUrl}/amenities`, this.selectedAmenity)
+        .subscribe(() => {
+          this.fetchAmenities();
+          this.cancelEdit();
+        });
+    }
+  }
+
+  deleteAmenity(_id?: string) {
+    if (!_id) return;
+    if (confirm('Are you sure you want to delete this amenity?')) {
+      this.http.delete(`${environment.baseUrl}/amenities/${_id}`).subscribe(() => {
+        this.fetchAmenities();
       });
     }
   }

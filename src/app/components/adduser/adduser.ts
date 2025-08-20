@@ -16,33 +16,45 @@ import { Iuser } from '../../models/iuser';
 export class AddUserComponent {
   userForm: FormGroup;
 
-constructor(private http: HttpClient, private router: Router) {
-  this.userForm = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    phone: new FormControl('', [Validators.pattern('^[0-9]{10,15}$')]),
-
-    gender: new FormControl('', Validators.required),
-    dateOfBirth: new FormControl('', Validators.required),
-    isVerified: new FormControl(false),
-    isAdmin: new FormControl(false),
-  });
-}
-
-
+  constructor(private http: HttpClient, private router: Router) {
+    this.userForm = new FormGroup({
+      userName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      profilePic: new FormControl(''),
+      role: new FormControl('guest', Validators.required),
+      isVerified: new FormControl(false),
+      createdAt: new FormControl(new Date().toISOString().split('T')[0]),
+      updatedAt: new FormControl(new Date().toISOString().split('T')[0]),
+      passwordChangedAt: new FormControl('') 
+    });
+  }
 
   addUser() {
     if (this.userForm.valid) {
-      this.http.post<Iuser>(`${environment.baseUrl}/users`, this.userForm.value).subscribe(() => {
-        alert('User added successfully');
-        this.router.navigate(['/users']);
-      });  
+      // تحويل التواريخ إلى ISO قبل الإرسال
+      const payload = {
+        ...this.userForm.value,
+        createdAt: new Date(this.userForm.value.createdAt).toISOString(),
+        updatedAt: new Date(this.userForm.value.updatedAt).toISOString(),
+        passwordChangedAt: this.userForm.value.passwordChangedAt 
+          ? new Date(this.userForm.value.passwordChangedAt).toISOString()
+          : undefined
+      };
+
+      this.http.post<Iuser>(`${environment.baseUrl}/users`, payload).subscribe({
+        next: () => {
+          alert('User added successfully');
+          this.router.navigate(['/users']);
+        },
+        error: (err) => {
+          console.error('Add user failed:', err);
+          alert('Failed to add user. Check console.');
+        }
+      });
     } else {
-      alert('Please, enter a valid inputs');
+      this.userForm.markAllAsTouched();
+      alert('Please, fill all required fields correctly.');
     }
   }
-
-
-
 }

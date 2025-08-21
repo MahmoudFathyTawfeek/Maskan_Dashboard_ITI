@@ -1,13 +1,9 @@
-<nav class="navbar navbar-expand-lg py-3 bg-nav shadow-sm position-relative">
-  <div class="container-fluid">
-    <!-- Logo (left) -->
-    <a class="navbar-brand" routerLink="/">
+<nav class="navbar navbar-expand-lg py-3 bg-nav shadow-sm"
+  [ngClass]="isDarkMode ? 'dark-mode' : 'light-mode' ">
+  <div class="container-fluid justify-content-center">
+    <!-- Centered Logo -->
+    <a class="navbar-brand mx-auto" routerLink="/">
       <img src="assets/logooo.PNG" alt="Logo" width="120" height="40" class="rounded shadow-sm" />
     </a>
-
-    <!-- Centered Title -->
-    <span class="navbar-text position-absolute top-50 start-50 translate-middle fw-bold text-light fs-3">
-      Dashboard
-    </span>
   </div>
 </nav>

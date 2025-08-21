@@ -9,6 +9,7 @@ import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { ListingService } from '../../service/listing';
 import { BookingService } from '../../service/bookings';
 import { CategoryService } from '../../service/category-service';
+import { CommonModule } from '@angular/common';
 
 Chart.register(...registerables, DataLabelsPlugin);
 

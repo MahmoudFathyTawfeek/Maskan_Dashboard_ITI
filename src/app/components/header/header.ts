@@ -1,3 +1,4 @@
+import { ThemeService } from './../../service/theme-service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
@@ -8,5 +9,11 @@ import { Component } from '@angular/core';
   styleUrl: './header.css'
 })
 export class Header {
+    isDarkMode: boolean = false;
 
+  constructor(private themeService:ThemeService){
+    this.themeService.darkMode$.subscribe(mode => {
+      this.isDarkMode = mode;
+    });
+  }
 }

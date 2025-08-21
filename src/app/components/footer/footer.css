@@ -1,3 +1,8 @@
 .bg-footer{
   background-color: #292524;
 }
+/* Footer ثابت تحت */
+footer {
+  height: 50px; /* عدّل حسب ارتفاع الفوتر */
+  z-index: 1050;
+}

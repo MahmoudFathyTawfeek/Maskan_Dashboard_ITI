@@ -1,11 +1,7 @@
-<div class="d-flex">
-  <!-- Sidebar -->
-  <div class="col-md-2 text-white p-3 d-none d-md-block text-center" style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">
-    <!-- Sidebar Content -->
-  </div>
+<div>
 
   <!-- Main Content -->
-  <div class="col-md-10 col-12 p-4">
+  <div class="col-md-10 col-12 p-4 w-100">
    <div class="container mt-4">
   <h2>Categories</h2>
 
@@ -39,7 +35,7 @@
   <div class="d-flex justify-content-between mt-3">
     <button class="btn btn-secondary" (click)="prevPage()" [disabled]="currentPage === 1">Prev</button>
     <span>Page {{ currentPage }}</span>
-    <button class="btn btn-secondary" (click)="nextPage()" 
+    <button class="btn btn-secondary" (click)="nextPage()"
       [disabled]="currentPage * pageSize >= filteredCategories.length">Next</button>
   </div>
 

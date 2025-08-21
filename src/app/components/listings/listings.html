@@ -1,18 +1,13 @@
-<div class="d-flex">
-
-  <!-- Sidebar -->
-  <div class="col-md-2 text-white p-3 d-none d-md-block text-center"
-       style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">
-  </div>
+<div>
 
   <!-- Main Content -->
-  <div class="col-md-10 col-12 p-4">
+  <div class="col-md-10 col-12 p-4 w-100">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h3>All Listings</h3>
       <a routerLink="/listings/add" class="btn btn-primary">+ Add Listing</a>
     </div>
 
-   <div class="col-md-10 col-12 p-4">
+  <div class="col-md-10 col-12 p-4">
   <!-- Error Message -->
   <div *ngIf="error" class="alert alert-danger">
     {{ error }}
@@ -56,7 +51,7 @@
 
           <div class="card-body">
   <h5 class="card-title">{{ listing.title }}</h5>
-  
+
   <!-- Host Info -->
   <p class="card-text">
     <small class="text-muted">Host: {{ listing.host.userName }}</small>
@@ -101,10 +96,10 @@
 </div>
 
 </div>
-  
+
   </div>
 
-   
+
 </div>
 
  <!-- Pagination -->

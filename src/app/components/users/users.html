@@ -1,11 +1,6 @@
-<div class="d-flex flex-wrap">
-  <!-- Sidebar -->
-  <div class="col-12 col-md-2 text-white p-3 d-none d-md-block text-center"
-       style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">
-  </div>
-
+<div >
   <!-- Main Content -->
-  <div class="col-12 col-md-10 p-4">
+  <div class="col-12 col-md-10 p-4 w-100">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h3>Users List</h3>
       <!-- زر Add User -->
@@ -24,7 +19,7 @@
       </div>
     </div>
 <div class="table-responsive">
- 
+
     <table class="table table-bordered table-hover table-sm align-middle text-center"
     *ngIf="users.length > 0" [ngClass]="isDarkMode ? 'bg-black text-light' : 'bg-light text-dark'">
       <thead class="table-dark">
@@ -56,7 +51,7 @@
             <button class="btn btn-primary btn-sm me-1" (click)="editUser(user._id!)">
               ✏️ Edit
             </button>
-            
+
             <button class="btn btn-danger btn-sm" (click)="deleteUser(user._id!)">
               🗑️ Delete
             </button>

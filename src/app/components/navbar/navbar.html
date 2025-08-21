@@ -1,73 +1,80 @@
 <!-- Sidebar Toggle Button (Mobile only) -->
-<button class="btn"
-        [ngClass]="isDarkMode ? 'btn-light' : 'btn-dark'"
+<button class="btn btn-dark d-md-none mb-2"
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#sidebarMenu">
-  ☰ Menu
+  <i class="bi bi-list"></i> Menu
 </button>
 
 <!-- Sidebar -->
-<div class="offcanvas offcanvas-start d-md-flex flex-column flex-shrink-0 p-3 offcanvas-md show"
-     [ngClass]="isDarkMode ? 'bg-black text-light' : 'bg-light text-dark'"
-     tabindex="-1"
-     id="sidebarMenu"
-     style="border-right:1px solid blue ;">
-  
+<div class="offcanvas offcanvas-start d-md-flex flex-column flex-shrink-0 p-3 pt-5 offcanvas-md show shadow-sm"
+    [ngClass]="isDarkMode ? 'dark-mode' : 'light-mode' "
+    tabindex="-1"
+    id="sidebarMenu"
+    >
 
-  <!-- Header (Mobile only) -->
-  <div class="offcanvas-header d-md-none"  [ngClass]="isDarkMode ? 'bg-black text-light' : 'bg-light text-dark'">
-    <h5 class="offcanvas-title">Dashboard</h5>
-    <button type="button"
-            class="btn-close"
-            [ngClass]="isDarkMode ? 'btn-close-white' : ''"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close">
-    </button>
-  </div>
-
-  <!-- Logo -->
-   <div class="align-items-center justify-content-center border-dark">
-    <a class="navbar-brand d-flex align-items-center mb-3">
-    <img src="assets/logooo.PNG" alt="Logo" height="50px" width="200">
-  </a>
-   </div>
-  
-
-  <h2 class="d-none d-md-inline ms-2">Dashboard</h2>
+  <h4 class="fw-bold text-center d-none d-md-block">Dashboard</h4>
 
   <!-- Navigation Links -->
-  <ul class="nav nav-pills flex-column mb-auto mt-4"  [ngClass]="isDarkMode ? 'bg-black text-light' : 'bg-light text-dark'">
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/home" routerLinkActive="active">🏠 Home</a>
+  <ul class="nav nav-pills flex-column mb-auto mt-4 gap-2 custom-sidebar">
+    <li>
+      <a class="nav-link d-flex align-items-center gap-2"
+        routerLink="/home"
+        routerLinkActive="active">
+        <i class="bi bi-house-door"></i> Home
+      </a>
     </li>
     <li>
-      <a class="nav-link" routerLink="/users" routerLinkActive="active">👥 Users</a>
-    </li>
-   
-    <li>
-      <a class="nav-link" routerLink="/listings" routerLinkActive="active">📢 Listings</a>
-    </li>
-     <li>
-      <a class="nav-link" routerLink="/newlistings" routerLinkActive="active">📢New Listings</a>
+      <a class="nav-link d-flex align-items-center gap-2"
+        routerLink="/users"
+        routerLinkActive="active">
+        <i class="bi bi-people"></i> Users
+      </a>
     </li>
     <li>
-      <a class="nav-link" routerLink="/bookings" routerLinkActive="active">📅 Bookings</a>
+      <a class="nav-link d-flex align-items-center gap-2"
+        routerLink="/listings"
+        routerLinkActive="active">
+        <i class="bi bi-megaphone"></i> Listings
+      </a>
     </li>
-     <li>
-      <a class="nav-link" routerLink="/amenities" routerLinkActive="active">🏢 Amenities</a>
+    <li>
+      <a class="nav-link d-flex align-items-center gap-2"
+        routerLink="/newlistings"
+        routerLinkActive="active">
+        <i class="bi bi-plus-square"></i> New Listings
+      </a>
     </li>
-     <li>
-      <a class="nav-link" routerLink="/categories" routerLinkActive="active">🏢 Categories</a>
+    <li>
+      <a class="nav-link d-flex align-items-center gap-2"
+        routerLink="/bookings"
+        routerLinkActive="active">
+        <i class="bi bi-calendar-check"></i> Bookings
+      </a>
+    </li>
+    <li>
+      <a class="nav-link d-flex align-items-center gap-2"
+        routerLink="/amenities"
+        routerLinkActive="active">
+        <i class="bi bi-building"></i> Amenities
+      </a>
+    </li>
+    <li>
+      <a class="nav-link d-flex align-items-center gap-2"
+        routerLink="/categories"
+        routerLinkActive="active">
+        <i class="bi bi-grid"></i> Categories
+      </a>
     </li>
 
     <!-- Theme Toggle Button -->
-    <li class="mt-3">
-      <button class="btn w-100 btn-sm"
-              [ngClass]="isDarkMode ? 'btn-outline-light text-light border-light' : 'btn-outline-dark text-dark border-dark'"
+    <li class="mt-5">
+      <button class="btn w-100 mode-btn"
+              [ngClass]="isDarkMode ? 'btn-outline-light' : 'btn-outline-dark'"
               (click)="toggleTheme()">
-        {{ isDarkMode ? '☀️ Light' : '🌙 Dark' }}
+        {{ isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode' }}
       </button>
     </li>
   </ul>
 </div>
+

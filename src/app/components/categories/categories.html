@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="d-flex">
   <!-- Sidebar -->
   <div class="col-md-2 text-white p-3 d-none d-md-block text-center" 
@@ -9,6 +10,14 @@
   <div class="col-md-10 col-12 p-4">
     <div class="container mt-4">
       <h2>Categories</h2>
+=======
+<div>
+
+  <!-- Main Content -->
+  <div class="col-md-10 col-12 p-4 w-100">
+   <div class="container mt-4">
+  <h2>Categories</h2>
+>>>>>>> 41dd49e88c9bd6b03321929ff96f4d97c3d409d2
 
       <!-- 🔍 بحث -->
       <input type="text" [(ngModel)]="searchTerm" placeholder="Search..." class="form-control mb-3" />
@@ -38,19 +47,12 @@
         </tbody>
       </table>
 
-      <!-- ⏮️⏭️ Pagination -->
-      <div class="d-flex justify-content-between mt-3">
-        <button class="btn btn-secondary" (click)="prevPage()" [disabled]="currentPage === 1">Prev</button>
-        <span>Page {{ currentPage }}</span>
-        <button class="btn btn-secondary" (click)="nextPage()" 
-          [disabled]="currentPage * pageSize >= filteredCategories.length">Next</button>
-      </div>
-
-      <!-- ➕ فورم الإضافة والتعديل -->
-      <div class="card mt-4 p-3">
-        <h4 *ngIf="selectedCategory._id">Edit Category</h4>
-        <h4 *ngIf="!selectedCategory._id">Add New Category</h4>
-
+  <!-- ⏮️⏭️ Pagination -->
+  <div class="d-flex justify-content-between mt-3">
+    <button class="btn btn-secondary" (click)="prevPage()" [disabled]="currentPage === 1">Prev</button>
+    <span>Page {{ currentPage }}</span>
+    <button class="btn btn-secondary" (click)="nextPage()"
+      [disabled]="currentPage * pageSize >= filteredCategories.length">Next</button>
         <form (ngSubmit)="saveCategory()">
           <div class="mb-3">
             <label>English Name</label>

@@ -41,11 +41,11 @@ export class ListingsComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.listingService.getListings().subscribe({
+    this.listingService.getApprovedListings().subscribe({
       next: (data) => {
         console.log('Listings data:', data); // للتأكد من البيانات
-        this.listings = data;
-        this.filteredListings = data;
+        this.listings = data.data;
+        this.filteredListings = data.data;
         this.loading = false;
         this.cdr.detectChanges();
       },

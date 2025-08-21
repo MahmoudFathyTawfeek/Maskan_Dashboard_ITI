@@ -6,6 +6,7 @@ import { Iuser } from '../../models/iuser';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment.development';
 import { ThemeService } from '../../service/theme-service';
+import { userService } from '../../service/user-service';
 
 @Component({
   selector: 'app-users',
@@ -33,7 +34,8 @@ export class UsersComponent implements OnInit {
   constructor(
     private cdr: ChangeDetectorRef,
     private themeService: ThemeService,
-    private router: Router // ← أضفنا Router هنا
+    private router: Router,
+    private usersService:userService
   ) {
     this.themeService.darkMode$.subscribe(mode => {
       this.isDarkMode = mode;
@@ -42,9 +44,10 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.http.get<Iuser[]>(`${environment.baseUrl}/users`).subscribe(data => {
-      this.users = data;
-      this.filteredUsers = data;
+    this.usersService.getUsers().subscribe(data => {
+
+      this.users = data.data;
+      this.filteredUsers = data.data;
 
       this.totalHosts = this.users.filter(u => u.role?.toLowerCase() === 'host').length;
       this.totalGuests = this.users.filter(u => u.role?.toLowerCase() === 'guest').length;

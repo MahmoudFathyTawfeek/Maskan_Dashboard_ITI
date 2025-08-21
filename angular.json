@@ -23,7 +23,8 @@
             ],
             "styles": [
               "src/styles.css",
-              "@angular/material/prebuilt-themes/azure-blue.css"
+              "@angular/material/prebuilt-themes/azure-blue.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
             "scripts": []
           },
@@ -83,5 +84,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

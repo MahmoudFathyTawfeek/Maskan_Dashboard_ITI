@@ -1,9 +1,11 @@
+import { AmenitiesService } from './../../service/amenities-service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { IListing } from '../../models/ilisting';
 import { environment } from '../../../environments/environment.development';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ListingService } from '../../service/listing';
 
 interface IAmenity { _id: string; name: string; }
 
@@ -15,7 +17,12 @@ interface IAmenity { _id: string; name: string; }
   styleUrls: ['./admin-listings.css']
 })
 export class AdminListingsComponent implements OnInit {
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    private listingsService: ListingService,
+    private AmenitiesService:AmenitiesService
+  ) {}
 
   loading = false;
   pendingListings: IListing[] = [];
@@ -36,13 +43,19 @@ export class AdminListingsComponent implements OnInit {
     this.loading = true;
 
     // جلب amenities
-    this.http.get<IAmenity[]>(`${environment.baseUrl}/amenities`)
-      .subscribe(data => { this.amenities = data; });
+    this.AmenitiesService.getAmenities()
+      .subscribe(data => {
+        console.log(data);
+
+        this.amenities = data;
+      });
 
     // جلب الليستنج اللي في انتظار الموافقة
-    this.http.get<IListing[]>(`${environment.baseUrl}/pending-listings/pending`)
+    this.listingsService.getNotApprovedListings()
       .subscribe(data => {
-        this.pendingListings = data;
+        console.log(data);
+
+        this.pendingListings = data.data;
         this.totalPages = Math.ceil(this.pendingListings.length / this.itemsPerPage);
         this.getPaginatedListings();
         this.loading = false;

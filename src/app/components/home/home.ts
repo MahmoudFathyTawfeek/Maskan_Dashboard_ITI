@@ -1,9 +1,15 @@
+import { AmenitiesService } from './../../service/amenities-service';
+import { userService } from './../../service/user-service';
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import { ListingService } from '../../service/listing';
+import { BookingService } from '../../service/bookings';
+import { CategoryService } from '../../service/category-service';
+import { CommonModule } from '@angular/common';
 
 Chart.register(...registerables, DataLabelsPlugin);
 
@@ -15,6 +21,8 @@ Chart.register(...registerables, DataLabelsPlugin);
   styleUrls: ['./home.css']
 })
 export class Home implements OnInit, AfterViewInit {
+
+  users: any[] = [];
 
   // Counters
   usersCount = 0;
@@ -143,10 +151,25 @@ export class Home implements OnInit, AfterViewInit {
   @ViewChildren(BaseChartDirective) charts!: QueryList<BaseChartDirective>;
   public pieChartPlugins = [DataLabelsPlugin];
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
-
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    private userService: userService,
+    private AmenitiesService:AmenitiesService,
+    private listingsService : ListingService,
+    private bookingsService: BookingService,
+    private cateoryService : CategoryService
+  ) {}
   ngOnInit(): void {
     this.loadCounts();
+    this.listingsService.getNotApprovedListings().subscribe(data => {
+      console.log((data.data));
+      this.unapprovedAds = data.data.filter((ad: { isApproved: any; }) => !ad.isApproved).length;
+      this.cdr.detectChanges();
+    });
+    this.cateoryService.getAllCategories().subscribe(data =>{
+      console.log(data);
+    })
   }
 
   ngAfterViewInit(): void {
@@ -167,13 +190,15 @@ export class Home implements OnInit, AfterViewInit {
     });
 
     // Users
-    this.http.get<any[]>(`${environment.baseUrl}/users`).subscribe(data => {
-      this.usersCount = data.length;
-      this.hostCount = data.filter(u => u.role === 'host').length;
-      this.guestCount = data.filter(u => u.role === 'guest').length;
-      this.maleCount = data.filter(u => u.gender === 'male').length;
-      this.femaleCount = data.filter(u => u.gender === 'female').length;
-      const unspecifiedCount = data.filter(u => !u.gender || (u.gender !== 'male' && u.gender !== 'female')).length;
+    this.userService.getUsers().subscribe(data => {
+      console.log(data.data);
+      this.users = data.data;
+      this.usersCount = data.data.length;
+      this.hostCount = data.data.filter((u: any) => u.role === 'host').length;
+      this.guestCount = data.data.filter((u:any) => u.role === 'guest').length;
+      this.maleCount = data.data.filter((u:any) => u.gender === 'male').length;
+      this.femaleCount = data.data.filter((u:any) => u.gender === 'female').length;
+      const unspecifiedCount = data.data.filter((u:any) => !u.gender || (u.gender !== 'male' && u.gender !== 'female')).length;
 
       this.userTypePieData.datasets[0].data = [this.hostCount, this.guestCount];
       this.userGenderPieData.datasets[0].data = [this.maleCount, this.femaleCount, unspecifiedCount];
@@ -184,10 +209,11 @@ export class Home implements OnInit, AfterViewInit {
     });
 
     // Amenities
-    this.http.get<any[]>(`${environment.baseUrl}/amenities`).subscribe(data => {
-      this.amenitiesCount = data.length;
-      this.activeAmenities = data.filter(a => a.isActive).length;
-      this.inactiveAmenities = data.filter(a => !a.isActive).length;
+    this.AmenitiesService.getAmenities().subscribe(data => {
+      console.log((data.data));
+      this.amenitiesCount = data.data.length;
+      this.activeAmenities = data.data.filter((a: { isActive: any; }) => a.isActive).length;
+      this.inactiveAmenities = data.data.filter((a: { isActive: any; }) => !a.isActive).length;
       this.amenitiesPieData.datasets[0].data = [this.activeAmenities, this.inactiveAmenities];
 
       this.tryUpdateCharts(usersLoaded, unitsLoaded, bookingsLoaded, listingsLoaded);
@@ -195,20 +221,10 @@ export class Home implements OnInit, AfterViewInit {
     });
 
     // Listings
-    this.http.get<any[]>(`${environment.baseUrl}/listings`).subscribe(data => {
-      this.listingsCount = data.length;
 
-      // ✅ Build Categories Pie with names
-      const categoryCounts: { [cat: string]: number } = {};
-      data.forEach(l => {
-        const catId = l.categoryId || 'Unknown';
-        const catName = this.categoriesMap[catId] || 'Unknown';
-        categoryCounts[catName] = (categoryCounts[catName] || 0) + 1;
-      });
-
-      this.categoriesPieData.labels = Object.keys(categoryCounts);
-      this.categoriesPieData.datasets[0].data = Object.values(categoryCounts);
-      this.categoriesPieData.datasets[0].backgroundColor = Object.keys(categoryCounts).map(() => this.getRandomColor());
+    this.listingsService.getListings().subscribe(data => {
+      console.log((data.data));
+      this.listingsCount = data.data.length;
 
       unitsLoaded = true;
       this.tryUpdateCharts(usersLoaded, unitsLoaded, bookingsLoaded, listingsLoaded);
@@ -216,13 +232,14 @@ export class Home implements OnInit, AfterViewInit {
     });
 
     // Bookings + Payment Status + Bookings per day
-    this.http.get<any[]>(`${environment.baseUrl}/bookings`).subscribe(data => {
-      this.bookingsCount = data.length;
+    this.bookingsService.getBookings().subscribe(data => {
+      console.log(data.bookings);
+      this.bookingsCount = data.bookings.length;
 
       // Payment status counts
-      this.paymentStatus.paid = data.filter(b => b.paymentStatus === 'paid').length;
-      this.paymentStatus.pending = data.filter(b => b.paymentStatus === 'pending').length;
-      this.paymentStatus.failed = data.filter(b => b.paymentStatus === 'failed').length;
+      this.paymentStatus.paid = data.bookings.filter((b: { paymentStatus: string; }) => b.paymentStatus === 'paid').length;
+      this.paymentStatus.pending = data.bookings.filter((b: { paymentStatus: string; }) => b.paymentStatus === 'pending').length;
+      this.paymentStatus.failed = data.bookings.filter((b: { paymentStatus: string; }) => b.paymentStatus === 'failed').length;
       this.paymentStatusPieData.datasets[0].data = [
         this.paymentStatus.paid,
         this.paymentStatus.pending,
@@ -231,7 +248,7 @@ export class Home implements OnInit, AfterViewInit {
 
       // Group by date for both paymentStatusPerDayData and bookingsPerDayLineData
       const dateMap: { [date: string]: { paid: number; pending: number; failed: number; total: number } } = {};
-      data.forEach(b => {
+      data.bookings.forEach((b: { date: any; createdAt: any; paymentStatus: string; }) => {
         const date = new Date(b.date || b.createdAt).toISOString().split('T')[0];
         if (!dateMap[date]) dateMap[date] = { paid: 0, pending: 0, failed: 0, total: 0 };
         if (b.paymentStatus === 'paid') dateMap[date].paid++;
@@ -256,19 +273,18 @@ export class Home implements OnInit, AfterViewInit {
     });
 
     // Ads
-    this.http.get<any[]>(`${environment.baseUrl}/listings`).subscribe(data => {
-      data = data.map(ad => ({
+    this.listingsService.getListings().subscribe(data => {
+      data = data.data.map((ad: { isApproved: string | boolean; }) => ({
         ...ad,
         isApproved: ad.isApproved === true || ad.isApproved === 'true'
       }));
-
+      console.log((data));
       this.adsCount = data.length;
-      this.approvedAds = data.filter(ad => ad.isApproved).length;
-      this.unapprovedAds = data.filter(ad => !ad.isApproved).length;
+      this.approvedAds = data.filter((ad: { isApproved: any; }) => ad.isApproved).length;
       this.adsApprovalPieData.datasets[0].data = [this.approvedAds, this.unapprovedAds];
 
       const titleCounts: { [title: string]: number } = {};
-      data.forEach(ad => {
+      data.forEach((ad: { locationType: string; }) => {
         const title = ad.locationType || 'Unknown';
         titleCounts[title] = (titleCounts[title] || 0) + 1;
       });
@@ -280,6 +296,7 @@ export class Home implements OnInit, AfterViewInit {
       listingsLoaded = true;
       this.tryUpdateCharts(usersLoaded, unitsLoaded, bookingsLoaded, listingsLoaded);
       this.cdr.detectChanges();
+
     });
   }
 

@@ -1,35 +1,18 @@
-
-a.active{
+a{
     color: black !important;
 }
-
-.nav-link.active {
-  font-weight: bold;
-  color: #ffc107 !important;
+.light-mode {
+  background-color: #f3f4f6;
+  color: #212529;
 }
-
-
-.logo-img {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
+.dark-mode {
+  background-color: #000;
+  color: #fff;
 }
-
-
-.bg-black {
-  background-color: #000 !important;
-}
-
-
 #sidebarMenu {
-  min-width: 220px;
-  max-width: 250px;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1045;
+  width: 250px;
+  height: 100%;
+  border-right: 1px solid #6f4e37;
 }
 
 /* Offcanvas behavior on medium+ screens */
@@ -42,27 +25,11 @@ a.active{
 }
 
 /* Main content padding to avoid being hidden behind sidebar */
-body {
-  padding-left: 250px;
-}
-
 /* Adjust padding on small screens */
 @media (max-width: 767.98px) {
   body {
     padding-left: 0;
   }
-}
-
-/* Sidebar links */
-.nav-link {
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: background 0.3s;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Dark/Light text transitions */
@@ -75,14 +42,28 @@ body.bg-light {
   background-color: #6e88a1 !important;
   color: #212529 !important;
 }
-#sidebarMenu {
-  width: 250px;
-  min-height: 100vh;
-  border-right: none !important;
-  box-shadow: none !important;
+
+
+/* Sidebar Hover */
+.custom-sidebar .nav-link {
+  border-radius: 0;
+  padding: 10px 15px;
+  transition: all 0.3s ease;
 }
 
-main {
-  margin-left: 250px; /* نفس عرض الـ sidebar */
-  padding: 20px;
+.custom-sidebar .nav-link:hover {
+  background-color: rgba(111, 78, 55, 0.1); /* بني فاتح */
+  border-right: 4px solid #6f4e37;
+  color: var(--main-brown) !important;
 }
+
+.custom-sidebar .nav-link.active {
+  background-color: rgba(111, 78, 55, 0.2); /* لون أوضح عند التحديد */
+  border-right: 4px solid #6f4e37 ;
+  font-weight: bold;
+  color: #6f4e37 !important;
+}
+.mode-btn{
+  border-radius: 12px;
+}
+

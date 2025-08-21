@@ -93,11 +93,11 @@
   </p>
 
  <div class="d-flex justify-content-between mt-3">
-  <button class="btn btn-primary" [routerLink]="['/listings', listing._id]">View Details</button>
-  <div>
+  
+ 
     <button class="btn btn-warning me-2" [routerLink]="['/listings/update', listing._id]">Edit</button>
     <button class="btn btn-danger" (click)="listing._id && deleteListing(listing._id)">Delete</button>
-  </div>
+ 
 </div>
 
 </div>

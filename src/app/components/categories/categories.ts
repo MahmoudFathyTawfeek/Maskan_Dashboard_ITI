@@ -2,9 +2,9 @@ import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';  
 import { environment } from '../../../environments/environment.development';
-import { ICategory } from '../../models/icategory';
+import { Icategories } from '../../models/icategories';
 
 @Component({
   selector: 'app-categories',
@@ -15,10 +15,16 @@ import { ICategory } from '../../models/icategory';
 })
 export class CategoriesComponent implements OnInit {
   http = inject(HttpClient);
-  categories: ICategory[] = [];
+  categories: Icategories[] = [];
   isDarkMode = false;
 
-  selectedCategory: ICategory = { _id: '', name: '', createdAt: new Date(), updatedAt: new Date() };
+  selectedCategory: Icategories = { 
+    _id: '', 
+    name: '', 
+    arName: '', 
+    createdAt: new Date().toISOString(), 
+    updatedAt: new Date().toISOString() 
+  };
 
   loading = false;
   currentPage = 1;
@@ -31,23 +37,33 @@ export class CategoriesComponent implements OnInit {
     this.fetchCategories();
   }
 
+  // 🟢 جلب كل الكاتيجوريز
   fetchCategories() {
     this.loading = true;
-    this.http.get<ICategory[]>(`${environment.baseUrl}/categories`).subscribe(data => {
-      this.categories = data;
-      this.loading = false;
-      this.cdr.detectChanges();
+    this.http.get<Icategories[]>(`${environment.baseUrl}/categories`).subscribe({
+      next: (data) => {
+        this.categories = data;
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('❌ Error fetching categories:', err);
+        this.loading = false;
+      }
     });
   }
 
-  get filteredCategories(): ICategory[] {
+  // 🟢 البحث
+  get filteredCategories(): Icategories[] {
     if (!this.searchTerm) return this.categories;
     return this.categories.filter(c =>
-      c.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      (c.name?.toLowerCase().includes(this.searchTerm.toLowerCase())) ||
+      (c.arName?.toLowerCase().includes(this.searchTerm.toLowerCase()))
     );
   }
 
-  get paginatedCategories(): ICategory[] {
+  // 🟢 الباجينيشن
+  get paginatedCategories(): Icategories[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     return this.filteredCategories.slice(startIndex, startIndex + this.pageSize);
   }
@@ -64,25 +80,44 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
-  selectCategory(category: ICategory) {
+  // 🟢 اختيار الكاتيجوري للتعديل
+  selectCategory(category: Icategories) {
     this.selectedCategory = { ...category };
   }
 
   cancelEdit() {
-    this.selectedCategory = { _id: '', name: '', createdAt: new Date(), updatedAt: new Date() };
+    this.selectedCategory = { 
+      _id: '', 
+      name: '', 
+      arName: '', 
+      createdAt: new Date().toISOString(), 
+      updatedAt: new Date().toISOString() 
+    };
   }
 
+  // 🟢 حفظ (إضافة أو تعديل)
   saveCategory() {
     if (this.selectedCategory._id) {
-      // ✅ تحديث
-      this.http.put(`${environment.baseUrl}/categories/${this.selectedCategory._id}`, this.selectedCategory)
+      // تحديث
+      const updatedCategory = {
+        name: this.selectedCategory.name,
+        arName: this.selectedCategory.arName,
+        updatedAt: new Date().toISOString()
+      };
+      this.http.put(`${environment.baseUrl}/categories/${this.selectedCategory._id}`, updatedCategory)
         .subscribe(() => {
           this.fetchCategories();
           this.cancelEdit();
         });
     } else {
-      // ✅ إضافة جديد
-      this.http.post(`${environment.baseUrl}/categories`, this.selectedCategory)
+      // إضافة جديد
+      const newCategory = { 
+        name: this.selectedCategory.name,
+        arName: this.selectedCategory.arName,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      this.http.post(`${environment.baseUrl}/categories`, newCategory)
         .subscribe(() => {
           this.fetchCategories();
           this.cancelEdit();
@@ -90,6 +125,7 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
+  // 🟢 حذف
   deleteCategory(_id?: string) {
     if (!_id) return;
     if (confirm('Are you sure you want to delete this category?')) {

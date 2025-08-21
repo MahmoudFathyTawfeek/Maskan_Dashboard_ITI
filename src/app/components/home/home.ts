@@ -35,6 +35,9 @@ export class Home implements OnInit, AfterViewInit {
   activeAmenities = 0;
   inactiveAmenities = 0;
 
+  // Categories mapping
+  private categoriesMap: { [id: string]: string } = {};
+
   // Charts data
   amenitiesPieData: ChartConfiguration<'pie'>['data'] = {
     labels: ['Active', 'Inactive'],
@@ -86,6 +89,17 @@ export class Home implements OnInit, AfterViewInit {
     datasets: [{
       data: [0, 0],
       backgroundColor: ['#A3E4D7', '#8d86b6ff'],
+      borderColor: '#fff',
+      borderWidth: 2
+    }]
+  };
+
+  // ✅ New Categories Usage Pie
+  categoriesPieData: ChartConfiguration<'pie'>['data'] = {
+    labels: [],
+    datasets: [{
+      data: [],
+      backgroundColor: [],
       borderColor: '#fff',
       borderWidth: 2
     }]
@@ -145,6 +159,13 @@ export class Home implements OnInit, AfterViewInit {
     let bookingsLoaded = false;
     let listingsLoaded = false;
 
+    // ✅ Load categories first
+    this.http.get<any[]>(`${environment.baseUrl}/categories`).subscribe(categories => {
+      categories.forEach(c => {
+        this.categoriesMap[c.id] = c.name || `Category ${c.id}`;
+      });
+    });
+
     // Users
     this.http.get<any[]>(`${environment.baseUrl}/users`).subscribe(data => {
       this.usersCount = data.length;
@@ -176,6 +197,19 @@ export class Home implements OnInit, AfterViewInit {
     // Listings
     this.http.get<any[]>(`${environment.baseUrl}/listings`).subscribe(data => {
       this.listingsCount = data.length;
+
+      // ✅ Build Categories Pie with names
+      const categoryCounts: { [cat: string]: number } = {};
+      data.forEach(l => {
+        const catId = l.categoryId || 'Unknown';
+        const catName = this.categoriesMap[catId] || 'Unknown';
+        categoryCounts[catName] = (categoryCounts[catName] || 0) + 1;
+      });
+
+      this.categoriesPieData.labels = Object.keys(categoryCounts);
+      this.categoriesPieData.datasets[0].data = Object.values(categoryCounts);
+      this.categoriesPieData.datasets[0].backgroundColor = Object.keys(categoryCounts).map(() => this.getRandomColor());
+
       unitsLoaded = true;
       this.tryUpdateCharts(usersLoaded, unitsLoaded, bookingsLoaded, listingsLoaded);
       this.cdr.detectChanges();

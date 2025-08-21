@@ -1,5 +1,5 @@
 import { Iuser } from "./iuser";
-import { ICategory } from "./icategory";
+import { Icategories } from "./icategories";
 import { IAmenity } from "./iamenity";
 import { ILocation } from "./ilocation";
 
@@ -11,7 +11,7 @@ export interface IListing {
   roomNumbers?: number;
   pricePerNight: number;
 
-  categoryId: ICategory;  // populated أو id
+  categoryId: Icategories;  // populated أو id
   locationType: 'seaside' | 'city' | 'mountain' | 'rural';
   location: ILocation;
 

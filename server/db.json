@@ -1,6 +1,17 @@
 {
   "users": [
     {
+      "id": "68a0f8eba45877ebf16fb2de",
+      "name": "shoukrii",
+      "email": "shoukrysherif5@gmail.com",
+      "role": "admin",
+      "isVerified": true,
+      "dateOfBirth": "2000-11-13T00:00:00.000Z",
+      "password": "00000000",
+      "phone": "201277563987",
+      "gender": "male"
+    },
+    {
       "name": "Mahmoud_Tawfeek",
       "email": "mahmoud@gmail.com",
       "password": "00000000",
@@ -246,81 +257,172 @@
     }
   ],
   "categories": [
-    { "id": "1", "name": "Villa" },
-    { "id": "2", "name": "Studio" },
-    { "id": "3", "name": "Apartment" },
-    { "id": "4", "name": "Chalet" }
+    {
+      "_id": "66b8b4d8f92c9a001f3b0001",
+      "name": "house",
+      "createdAt": "2025-08-15T17:18:54.559Z",
+      "updatedAt": "2025-08-15T17:18:54.559Z",
+      "arName": "منزل",
+      "id": "8720"
+    },
+    {
+      "_id": "66b8c4d8f92c9a001f1e1003",
+      "name": "Chalet",
+      "createdAt": "2025-08-01T10:10:00.000Z",
+      "updatedAt": "2025-08-01T10:10:00.000Z",
+      "arName": "شاليه",
+      "id": "9ea5"
+    },
+    {
+      "_id": "66b8c4d8f92c9a001f1e1004",
+      "name": "Studio",
+      "createdAt": "2025-08-01T10:15:00.000Z",
+      "updatedAt": "2025-08-01T10:15:00.000Z",
+      "arName": "ستوديو",
+      "id": "0d86"
+    },
+    {
+      "name": "Villa",
+      "createdAt": "2025-08-01T10:05:00.000Z",
+      "updatedAt": "2025-08-01T10:05:00.000Z",
+      "arName": "فيلا",
+      "_id": "9cea",
+      "id": "a44d"
+    },
+    {
+      "name": "Penthouse",
+      "createdAt": "2025-08-01T10:20:00.000Z",
+      "updatedAt": "2025-08-01T10:20:00.000Z",
+      "arName": "بنتهاوس",
+      "_id": "ab8c",
+      "id": "4492"
+    },
+    {
+      "id": "df82",
+      "name": "Mahmoud",
+      "arName": "محمود",
+      "createdAt": "2025-08-21T19:30:05.126Z",
+      "updatedAt": "2025-08-21T19:30:05.126Z"
+    }
   ],
   "listings": [
-  {
-    "_id": "cd56",
-    "title": "Vella",
-    "hostId": { "_id": "aed9", "userName": "Ali", "email": "ali@example.com" },
-    "descrption": "Villa in New Sohag",
-    "pricePerNight": 1000,
-    "categoryId": { "_id": "3", "name": "Villa" },
-    "locationType": "City",
-    "location": { "address": "Sohag" },
-    "governorate": "Sohag",
-    "amenitiesId": [
-      { "_id": "4", "name": "Pool" },
-      { "_id": "3", "name": "WiFi" }
-    ],
-    "maxGustes": 6,
-    "photos": [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-      "https://images.unsplash.com/photo-1544894079-e81a9eb1da8b?fm=jpg",
-      "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg",
-      "https://images.unsplash.com/photo-1751795195789-8dab6693475d?fm=jpg"
-    ],
-    "averageRate": 1.9,
-    "isApproved": true,
-    "bookedDates": [
-      { "date": "2025-08-20T00:00:00Z", "dayType": "check-in" },
-      { "date": "2025-08-22T00:00:00Z", "dayType": "stay" },
-      { "date": "2025-08-25T00:00:00Z", "dayType": "check-out" }
-    ],
-    "reviews": [
-      {
-        "user": { "_id": "u123", "userName": "Sara", "email": "sara@example.com" },
-        "rating": 5,
-        "comment": "Amazing stay!",
-        "createdAt": "2025-07-30T12:00:00Z"
+    {
+      "_id": "cd56",
+      "title": "Vella",
+      "hostId": {
+        "_id": "aed9",
+        "userName": "Ali",
+        "email": "ali@example.com"
       },
-      {
-        "user": { "_id": "u124", "userName": "Mohamed", "email": "mohamed@example.com" },
-        "rating": 4,
-        "comment": "Very comfortable",
-        "createdAt": "2025-08-01T15:30:00Z"
-      }
-    ]
-  },
-  {
-    "_id": "cd57",
-    "title": "Sea View Apartment",
-    "hostId": { "_id": "aed10", "userName": "Nour", "email": "nour@example.com" },
-    "descrption": "Apartment with a beautiful sea view",
-    "pricePerNight": 750,
-    "categoryId": { "_id": "4", "name": "Apartment" },
-    "locationType": "Beach",
-    "location": { "address": "Hurghada" },
-    "governorate": "Red Sea",
-    "amenitiesId": [
-      { "_id": "5", "name": "Air Conditioning" },
-      { "_id": "3", "name": "WiFi" }
-    ],
-    "maxGustes": 4,
-    "photos": [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-      "https://images.unsplash.com/photo-1544894079-e81a9eb1da8b?fm=jpg",
-      "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg",
-      "https://images.unsplash.com/photo-1751795195789-8dab6693475d?fm=jpg"
-    ],
-    "averageRate": 4.5,
-    "isApproved": true,
-    "bookedDates": [],
-    "reviews": []
-  }
-]
-
+      "descrption": "Villa in New Sohag",
+      "pricePerNight": 1000,
+      "categoryId": {
+        "_id": "66b8c4d8f92c9a001f1e1002",
+        "name": "Villa"
+      },
+      "locationType": "City",
+      "location": {
+        "address": "Sohag"
+      },
+      "governorate": "Sohag",
+      "amenitiesId": [
+        {
+          "_id": "4",
+          "name": "Pool"
+        },
+        {
+          "_id": "3",
+          "name": "WiFi"
+        }
+      ],
+      "maxGustes": 6,
+      "photos": [
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+        "https://images.unsplash.com/photo-1544894079-e81a9eb1da8b?fm=jpg",
+        "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg",
+        "https://images.unsplash.com/photo-1751795195789-8dab6693475d?fm=jpg"
+      ],
+      "averageRate": 1.9,
+      "isApproved": true,
+      "bookedDates": [
+        {
+          "date": "2025-08-20T00:00:00Z",
+          "dayType": "check-in"
+        },
+        {
+          "date": "2025-08-22T00:00:00Z",
+          "dayType": "stay"
+        },
+        {
+          "date": "2025-08-25T00:00:00Z",
+          "dayType": "check-out"
+        }
+      ],
+      "reviews": [
+        {
+          "user": {
+            "_id": "u123",
+            "userName": "Sara",
+            "email": "sara@example.com"
+          },
+          "rating": 5,
+          "comment": "Amazing stay!",
+          "createdAt": "2025-07-30T12:00:00Z"
+        },
+        {
+          "user": {
+            "_id": "u124",
+            "userName": "Mohamed",
+            "email": "mohamed@example.com"
+          },
+          "rating": 4,
+          "comment": "Very comfortable",
+          "createdAt": "2025-08-01T15:30:00Z"
+        }
+      ],
+      "id": "005a"
+    },
+    {
+      "_id": "cd57",
+      "title": "Sea View Apartment",
+      "hostId": {
+        "_id": "aed10",
+        "userName": "Nour",
+        "email": "nour@example.com"
+      },
+      "descrption": "Apartment with a beautiful sea view",
+      "pricePerNight": 750,
+      "categoryId": {
+        "_id": "66b8b4d8f92c9a001f3b0001",
+        "name": "house"
+      },
+      "locationType": "Beach",
+      "location": {
+        "address": "Hurghada"
+      },
+      "governorate": "Red Sea",
+      "amenitiesId": [
+        {
+          "_id": "5",
+          "name": "Air Conditioning"
+        },
+        {
+          "_id": "3",
+          "name": "WiFi"
+        }
+      ],
+      "maxGustes": 4,
+      "photos": [
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+        "https://images.unsplash.com/photo-1544894079-e81a9eb1da8b?fm=jpg",
+        "https://images.unsplash.com/photo-1593696954577-ab3d39317b97?fm=jpg",
+        "https://images.unsplash.com/photo-1751795195789-8dab6693475d?fm=jpg"
+      ],
+      "averageRate": 4.5,
+      "isApproved": true,
+      "bookedDates": [],
+      "reviews": [],
+      "id": "acfc"
+    }
+  ]
 }

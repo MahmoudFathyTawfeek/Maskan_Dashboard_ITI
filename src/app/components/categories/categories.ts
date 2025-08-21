@@ -1,3 +1,4 @@
+import { CategoryService } from './../../service/category-service';
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -25,7 +26,7 @@ export class CategoriesComponent implements OnInit {
   pageSize = 7;
   searchTerm = '';
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef,private CategoryService:CategoryService) {}
 
   ngOnInit(): void {
     this.fetchCategories();
@@ -33,8 +34,11 @@ export class CategoriesComponent implements OnInit {
 
   fetchCategories() {
     this.loading = true;
-    this.http.get<ICategory[]>(`${environment.baseUrl}/categories`).subscribe(data => {
-      this.categories = data;
+    this.CategoryService.getAllCategories()
+    .subscribe(data => {
+      console.log(data);
+
+      this.categories = data.data;
       this.loading = false;
       this.cdr.detectChanges();
     });

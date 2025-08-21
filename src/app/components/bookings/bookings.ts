@@ -1,3 +1,4 @@
+import { BookingService } from './../../service/bookings';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Ibooking } from '../../models/ibooking';
@@ -30,7 +31,9 @@ export class BookingsComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private cdr: ChangeDetectorRef,  private themeService: ThemeService
+    private cdr: ChangeDetectorRef,
+    private themeService: ThemeService,
+    private BookingService: BookingService
         ) {
            this.themeService.darkMode$.subscribe(mode => {
             this.isDarkMode = mode;
@@ -44,10 +47,12 @@ export class BookingsComponent implements OnInit {
   }
 
   loadBookings() {
-    this.http.get<Ibooking[]>(`${environment.baseUrl}/bookings`)
+    this.BookingService.getBookings()
       .subscribe(data => {
-        this.bookings = data;
-        this.filteredBookings = data;
+        console.log(data);
+
+        this.bookings = data.bookings;
+        this.filteredBookings = data.bookings;
         this.cdr.detectChanges();
       });
   }

@@ -1,7 +1,7 @@
 <div class="d-flex flex-wrap">
   <!-- Sidebar -->
   <div class="col-12 col-md-2 text-white p-3 d-none d-md-block text-center"
-       style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">
+      style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">
   </div>
 
   <!-- Main Content -->
@@ -21,16 +21,16 @@
       <!-- User Types -->
       <div class="col-6 col-sm-4 col-md-2 text-center">
         <div class="card p-4 rounded-circle shadow-sm bg-light text-dark mx-auto" style="width: 160px; height: 160px;">
-          <canvas baseChart 
-            [data]="userTypePieData" 
-            [options]="miniPieChartOptions" 
-            [plugins]="pieChartPlugins" 
+          <canvas baseChart
+            [data]="userTypePieData"
+            [options]="miniPieChartOptions"
+            [plugins]="pieChartPlugins"
             [type]="'pie'">
           </canvas>
           <div style="font-size: 13px;">User Role</div>
         </div>
       </div>
-        
+
       <!-- Amenities -->
       <div class="col-6 col-sm-4 col-md-2 text-center">
         <div class="card p-4 rounded-circle shadow-sm bg-light text-dark mx-auto" style="width: 160px; height: 160px;">
@@ -47,10 +47,10 @@
       <!-- User Genders -->
       <div class="col-6 col-sm-4 col-md-2 text-center">
         <div class="card p-4 rounded-circle shadow-sm bg-light text-dark mx-auto" style="width: 160px; height: 160px;">
-          <canvas baseChart 
-            [data]="userGenderPieData" 
-            [options]="miniPieChartOptions" 
-            [plugins]="pieChartPlugins" 
+          <canvas baseChart
+            [data]="userGenderPieData"
+            [options]="miniPieChartOptions"
+            [plugins]="pieChartPlugins"
             [type]="'pie'">
           </canvas>
           <div style="font-size: 13px;">Users Genders</div>
@@ -60,10 +60,10 @@
       <!-- Ads Approval -->
       <div class="col-6 col-sm-4 col-md-2 text-center">
         <div class="card p-4 rounded-circle shadow-sm bg-light text-dark mx-auto" style="width: 160px; height: 160px;">
-          <canvas baseChart 
-            [data]="adsApprovalPieData" 
-            [options]="miniPieChartOptions" 
-            [plugins]="pieChartPlugins" 
+          <canvas baseChart
+            [data]="adsApprovalPieData"
+            [options]="miniPieChartOptions"
+            [plugins]="pieChartPlugins"
             [type]="'pie'">
           </canvas>
           <div style="font-size: 13px;">Listings Status</div>
@@ -73,10 +73,10 @@
       <!-- Payment Status -->
       <div class="col-6 col-sm-4 col-md-2 text-center">
         <div class="card p-4 rounded-circle shadow-sm bg-light text-dark mx-auto" style="width: 160px; height: 160px;">
-          <canvas baseChart 
-            [data]="paymentStatusPieData" 
-            [options]="miniPieChartOptions" 
-            [plugins]="pieChartPlugins" 
+          <canvas baseChart
+            [data]="paymentStatusPieData"
+            [options]="miniPieChartOptions"
+            [plugins]="pieChartPlugins"
             [type]="'pie'">
           </canvas>
           <div style="font-size: 13px;">Payment Status</div>
@@ -91,9 +91,9 @@
         <div class="card chart-card h-200">
           <div class="card-header bg-primary text-white fw-bold text-center">Overall Statistics</div>
           <div class="card-body">
-            <canvas baseChart 
-              [data]="barChartData" 
-              [options]="barChartOptions" 
+            <canvas baseChart
+              [data]="barChartData"
+              [options]="barChartOptions"
               [type]="'bar'">
             </canvas>
           </div>
@@ -105,10 +105,10 @@
         <div class="card chart-card h-200">
           <div class="card-header bg-info text-white fw-bold text-center">Listings by Location type</div>
           <div class="card-body">
-            <canvas baseChart 
-              [data]="listingsTitlePieData" 
-              [options]="pieChartOptions" 
-              [plugins]="pieChartPlugins" 
+            <canvas baseChart
+              [data]="listingsTitlePieData"
+              [options]="pieChartOptions"
+              [plugins]="pieChartPlugins"
               [type]="'pie'">
             </canvas>
           </div>
@@ -120,9 +120,9 @@
         <div class="card chart-card h-200">
           <div class="card-header bg-warning text-dark fw-bold text-center">Payment Status Per Day</div>
           <div class="card-body">
-            <canvas baseChart 
-              [data]="paymentStatusPerDayData" 
-              [options]="lineChartOptions" 
+            <canvas baseChart
+              [data]="paymentStatusPerDayData"
+              [options]="lineChartOptions"
               [type]="'line'">
             </canvas>
           </div>
@@ -134,9 +134,9 @@
         <div class="card chart-card h-200">
           <div class="card-header bg-warning text-dark fw-bold text-center">Bookings Per Day</div>
           <div class="card-body">
-            <canvas baseChart 
-              [data]="bookingsPerDayLineData" 
-              [options]="lineChartOptions" 
+            <canvas baseChart
+              [data]="bookingsPerDayLineData"
+              [options]="lineChartOptions"
               [type]="'line'">
             </canvas>
           </div>

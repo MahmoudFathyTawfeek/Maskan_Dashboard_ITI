@@ -1,3 +1,4 @@
+import { CookieService } from 'ngx-cookie-service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -5,13 +6,15 @@ import { Router, RouterLink } from '@angular/router';
 import { Authintication } from '../../service/authintication';
 import {jwtDecode} from 'jwt-decode'
 import Swal from 'sweetalert2'
+import { Footer } from "../footer/footer";
+import { Header } from "../header/header";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, RouterLink]
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, Footer, Header]
 })
 export class Login {
   loginForm: FormGroup;
@@ -21,7 +24,8 @@ export class Login {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: Authintication
+    private authService: Authintication,
+    private cookieService: CookieService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -39,6 +43,9 @@ onSubmit() {
         this.loading = false;
 
         if (response?.token) {
+          // Store the token in localStorage
+          this.cookieService.set('token', response.token, { path: '/', sameSite: 'Lax' });
+          localStorage.setItem('token', response.token);
           try {
             const decoded: any = jwtDecode(response.token);
 

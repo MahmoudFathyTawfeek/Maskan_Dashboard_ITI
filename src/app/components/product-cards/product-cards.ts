@@ -1,3 +1,4 @@
+import { AmenitiesService } from './../../service/amenities-service';
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -24,7 +25,7 @@ export class AmenitiesComponent implements OnInit {
   pageSize = 7;
   searchTerm = '';
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef,private AmenitiesService:AmenitiesService) {}
 
   ngOnInit(): void {
     this.fetchAmenities();
@@ -32,8 +33,10 @@ export class AmenitiesComponent implements OnInit {
 
   fetchAmenities() {
     this.loading = true;
-    this.http.get<IAmenity[]>(`${environment.baseUrl}/amenities`).subscribe(data => {
-      this.amenities = data;
+    this.AmenitiesService.getAmenities().subscribe(data => {
+      console.log(data);
+
+      this.amenities = data.data;
       this.loading = false;
       this.cdr.detectChanges();
     });

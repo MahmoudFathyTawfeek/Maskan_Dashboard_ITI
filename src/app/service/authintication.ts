@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,12 +12,8 @@ export class Authintication {
 
   constructor(private http: HttpClient) {}
 
-  // بيرجع كل اليوزرز
-  getUsers(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
-  }
   login(email: string, password: string): Observable<any> {
-    const loginUrl = `http://localhost:8000/api/v1/users/login`;
+    const loginUrl = `${this.apiUrl}/login`;
     return this.http.post<any>(loginUrl, { email, password });
   }
 }

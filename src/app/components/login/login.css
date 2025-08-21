@@ -2,15 +2,6 @@ body {
   margin: 0;
   padding: 0;
 }
-.bg-nav {
-  background-color: #C69963 !important; /* dark brown */
-}
-
-.navbar-text {
-  font-size: 1.3rem;
-  color: #C69963 !important;
-}
-
 /* Brand Color */
 .text-brown {
   color: #C69963 !important;

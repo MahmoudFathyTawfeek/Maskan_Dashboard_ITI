@@ -46,7 +46,7 @@ export interface IListing {
 
   maxGustes: number;
   photos: string[];
-  
+
   bookedDates?: {
     date: string;
     bookingId?: string | undefined;
@@ -68,4 +68,7 @@ export interface IListing {
   updatedAt?: string;
 
   averageRating?: number; // Virtual field
+  arTitle?: string;
+  arDescrption?: string;
+  bathrooms?: number;
 }

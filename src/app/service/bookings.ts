@@ -9,13 +9,13 @@ import { environment } from '../../environments/environment.development';
   providedIn: 'root'
 })
 export class BookingService {
-  private bookingsUrl = `${environment.baseUrl}/bookings`;
+  private bookingsUrl = `${environment.baseUrl}/bookings/all`;
   private unitsUrl = `${environment.baseUrl}/units`;
 
   constructor(private http: HttpClient) {}
 
-  getBookings(): Observable<Ibooking[]> {
-    return this.http.get<Ibooking[]>(this.bookingsUrl);
+  getBookings(): Observable<any> {
+    return this.http.get<any>(this.bookingsUrl,{withCredentials:true});
   }
 
   getUnits(): Observable<{id: number}[]> {

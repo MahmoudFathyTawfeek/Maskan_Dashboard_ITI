@@ -1,17 +1,6 @@
 <div class="d-flex flex-column min-vh-100 m-0 p-0">
-
-  <!-- Nav -->
-  <header class="bg-nav shadow-sm py-2 px-3 py-4 d-flex align-items-center position-relative">
-    <!-- Logo (left) -->
-    <a class="d-flex align-items-center text-decoration-none" routerLink="/">
-      <img src="assets/logooo.PNG" alt="Logo" width="120" height="40" class="rounded shadow-sm" />
-    </a>
-
-    <!-- Centered Title -->
-    <h1 class="position-absolute top-50 start-50 translate-middle text-light fw-bold fs-3 m-0">
-      Dashboard
-    </h1>
-  </header>
+  <!-- Header -->
+  <app-header></app-header>
 
   <!-- Main Content -->
   <main class="flex-grow-1 d-flex justify-content-center align-items-center bg-light">
@@ -37,7 +26,7 @@
               (mouseup)="showPassword = false"
               (mouseleave)="showPassword = false"
               tabindex="-1">
-              👁️
+              👁️‍🗨️
             </button>
           </div>
         </div>
@@ -49,13 +38,7 @@
       </form>
     </div>
   </main>
-
   <!-- Footer -->
-  <footer class="bg-footer text-white text-center py-3">
-    <div class="container">
-      <p class="mb-0">
-        &copy; 2025 <span style="color:#C69963;">Maskan</span>. All rights reserved.
-      </p>
-    </div>
-  </footer>
+  <app-footer></app-footer>
+
 </div>

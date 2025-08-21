@@ -5,7 +5,7 @@
 
 
     <!-- الدوائر الإحصائية -->
-    <div class="row g-3 mb-5 justify-content-center">
+    <div class="row g-3 mb-5 justify-content-start flex-nowrap overflow-auto">
       <!-- Occupancy Rate -->
       <div class="col-6 col-sm-4 col-md-2 text-center">
         <div
@@ -139,92 +139,35 @@
         </div>
       </div>
 
-    </div>
-  </div>
+<!-- Categories Usage -->
+<div class="col-6 col-sm-4 col-md-2 text-center">
+  <div
+    class="card shadow-lg border-0 d-flex flex-column align-items-center justify-content-center mx-auto"
+    style="width: 180px; height: 200px; border-radius: 20px; background: linear-gradient(135deg, #fff, #f9f6f4);">
 
-  <!-- User Types -->
-  <div class="text-center">
-    <div class="card p-4 rounded-circle shadow-sm bg-light text-dark mx-auto"
-         style="width: 160px; height: 160px;">
-      <canvas baseChart 
-        [data]="userTypePieData" 
-        [options]="miniPieChartOptions" 
-        [plugins]="pieChartPlugins" 
-        [type]="'pie'">
-      </canvas>
-      <div style="font-size: 13px;">User Role</div>
-    </div>
-  </div>
-
-  <!-- Amenities -->
-  <div class="text-center">
-    <div class="card p-4 rounded-circle shadow-sm bg-light text-dark mx-auto"
-         style="width: 160px; height: 160px;">
-      <canvas baseChart
-        [data]="amenitiesPieData"
-        [type]="'pie'"
-        [options]="miniPieChartOptions"
-        [plugins]="pieChartPlugins">
-      </canvas>
-      <div style="font-size: 13px;">Amenities Status</div>
-    </div>
-  </div>
-
-  <!-- User Genders -->
-  <div class="text-center">
-    <div class="card p-4 rounded-circle shadow-sm bg-light text-dark mx-auto"
-         style="width: 160px; height: 160px;">
-      <canvas baseChart 
-        [data]="userGenderPieData" 
-        [options]="miniPieChartOptions" 
-        [plugins]="pieChartPlugins" 
-        [type]="'pie'">
-      </canvas>
-      <div style="font-size: 13px;">Users Genders</div>
-    </div>
-  </div>
-
-  <!-- Ads Approval -->
-  <div class="text-center">
-    <div class="card p-4 rounded-circle shadow-sm bg-light text-dark mx-auto"
-         style="width: 160px; height: 160px;">
-      <canvas baseChart 
-        [data]="adsApprovalPieData" 
-        [options]="miniPieChartOptions" 
-        [plugins]="pieChartPlugins" 
-        [type]="'pie'">
-      </canvas>
-      <div style="font-size: 13px;">Listings Status</div>
-    </div>
-  </div>
-
-  <!-- Payment Status -->
-  <div class="text-center">
-    <div class="card p-4 rounded-circle shadow-sm bg-light text-dark mx-auto"
-         style="width: 160px; height: 160px;">
-      <canvas baseChart 
-        [data]="paymentStatusPieData" 
-        [options]="miniPieChartOptions" 
-        [plugins]="pieChartPlugins" 
-        [type]="'pie'">
-      </canvas>
-      <div style="font-size: 13px;">Payment Status</div>
-    </div>
-  </div>
-
-  <!-- Categories Usage -->
-  <div class="text-center">
-    <div class="card p-4 rounded-circle shadow-sm bg-light text-dark mx-auto"
-         style="width: 160px; height: 160px;">
+    <!-- Pie Chart -->
+    <div class="p-2" style="width: 100px; height: 100px;">
       <canvas baseChart 
         [data]="categoriesPieData" 
         [options]="miniPieChartOptions" 
         [plugins]="pieChartPlugins" 
         [type]="'pie'">
       </canvas>
-      <div style="font-size: 13px;">Categories Usage</div>
+    </div>
+
+    <!-- Title -->
+    <div class="mt-2 fw-semibold text-brown" style="font-size: 14px;">
+      Categories Usage
     </div>
   </div>
+</div>
+
+
+
+    </div>
+  </div>
+
+  
 
 </div>
 

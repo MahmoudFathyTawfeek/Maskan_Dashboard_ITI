@@ -1,104 +1,101 @@
 <div class="d-flex">
   <!-- Sidebar -->
-  <div
-    class="col-md-2 text-white p-3 d-none d-md-block text-center"
-    style="min-height: 100vh; border-right: 1px solid rgb(61, 4, 114);">
+  <div class="sidebar text-white p-3 d-none d-md-block text-center">
     <!-- Sidebar Content -->
   </div>
 
   <!-- Main Content -->
-  <div class="col-md-10 col-12 p-4 w-100">
-      <h2>Categories</h2>
+  <div class="main-content p-4 flex-grow-1">
+    <h2>Categories</h2>
 
-      <!-- 🔍 بحث -->
-      <input
-        type="text"
-        [(ngModel)]="searchTerm"
-        placeholder="Search..."
-        class="form-control mb-3" />
+    <!-- 🔍 بحث -->
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Search..."
+      class="form-control mb-3" />
 
-      <!-- 📋 جدول -->
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>English Name</th>
-            <th>Arabic Name</th>
-            <th>Created At</th>
-            <th>Updated At</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let cat of paginatedCategories">
-            <td>{{ cat.name }}</td>
-            <td>{{ cat.arName }}</td>
-            <td>{{ cat.createdAt | date:'short' }}</td>
-            <td>{{ cat.updatedAt | date:'short' }}</td>
-            <td>
-              <button
-                class="btn btn-warning btn-sm"
-                (click)="selectCategory(cat)">
-                Edit
-              </button>
-              <button
-                class="btn btn-danger btn-sm"
-                (click)="deleteCategory(cat._id)">
-                Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- 📋 جدول -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>English Name</th>
+          <th>Arabic Name</th>
+          <th>Created At</th>
+          <th>Updated At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cat of paginatedCategories">
+          <td>{{ cat.name }}</td>
+          <td>{{ cat.arName }}</td>
+          <td>{{ cat.createdAt | date:'short' }}</td>
+          <td>{{ cat.updatedAt | date:'short' }}</td>
+          <td>
+            <button
+              class="btn btn-warning btn-sm"
+              (click)="selectCategory(cat)">
+              Edit
+            </button>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="deleteCategory(cat._id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-      <!-- ⏮️⏭️ Pagination -->
-      <div class="d-flex justify-content-between mt-3">
-        <button
-          class="btn btn-secondary"
-          (click)="prevPage()"
-          [disabled]="currentPage === 1">
-          Prev
-        </button>
-        <span>Page {{ currentPage }}</span>
-        <button
-          class="btn btn-secondary"
-          (click)="nextPage()"
-          [disabled]="currentPage * pageSize >= filteredCategories.length">
-          Next
-        </button>
+    <!-- ⏮️⏭️ Pagination -->
+    <div class="d-flex justify-content-between mt-3">
+      <button
+        class="btn btn-secondary"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1">
+        Prev
+      </button>
+      <span>Page {{ currentPage }}</span>
+      <button
+        class="btn btn-secondary"
+        (click)="nextPage()"
+        [disabled]="currentPage * pageSize >= filteredCategories.length">
+        Next
+      </button>
+    </div>
+
+    <!-- 📝 Form -->
+    <form (ngSubmit)="saveCategory()" class="mt-4">
+      <div class="mb-3">
+        <label>English Name</label>
+        <input
+          type="text"
+          [(ngModel)]="selectedCategory.name"
+          name="name"
+          class="form-control"
+          required />
       </div>
 
-      <!-- 📝 Form -->
-      <form (ngSubmit)="saveCategory()" class="mt-4">
-        <div class="mb-3">
-          <label>English Name</label>
-          <input
-            type="text"
-            [(ngModel)]="selectedCategory.name"
-            name="name"
-            class="form-control"
-            required />
-        </div>
+      <div class="mb-3">
+        <label>Arabic Name</label>
+        <input
+          type="text"
+          [(ngModel)]="selectedCategory.arName"
+          name="arName"
+          class="form-control"
+          required />
+      </div>
 
-        <div class="mb-3">
-          <label>Arabic Name</label>
-          <input
-            type="text"
-            [(ngModel)]="selectedCategory.arName"
-            name="arName"
-            class="form-control"
-            required />
-        </div>
-
-        <button type="submit" class="btn btn-success me-2">
-          {{ selectedCategory._id ? 'Update' : 'Add' }}
-        </button>
-        <button
-          type="button"
-          class="btn btn-secondary"
-          (click)="cancelEdit()">
-          Cancel
-        </button>
-      </form>
-    </div>
+      <button type="submit" class="btn btn-success me-2">
+        {{ selectedCategory._id ? 'Update' : 'Add' }}
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="cancelEdit()">
+        Cancel
+      </button>
+    </form>
   </div>
-
+</div>
